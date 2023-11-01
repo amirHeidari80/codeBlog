@@ -5,11 +5,14 @@ import 'package:flutter_codeblog/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: MyColors.colorStatusBar,
       systemNavigationBarColor: MyColors.colorNavigationBar,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarIconBrightness: Brightness.dark));
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -18,30 +21,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('fa'), // farsi
       ],
-      home: SplashScreen(),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(),
+      theme: ThemeData(
+        fontFamily: 'dana',
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(
+            color: MyColors.colorPosterTitle,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+          bodyMedium: TextStyle(
+            color: MyColors.colorPosterSubText,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
+      home: SplashScreen(),
     );
   }
 }

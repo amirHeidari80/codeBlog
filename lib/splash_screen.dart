@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/const/colors.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
-import 'package:flutter_codeblog/main.dart';
 import 'package:flutter_codeblog/main_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
