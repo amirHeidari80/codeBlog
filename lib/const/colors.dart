@@ -24,6 +24,10 @@ class MyGradintColors {
     Color.fromARGB(255, 0, 0, 0),
     Color.fromARGB(255, 63, 63, 63),
   ];
+  static List<Color> gradintBlogs = const [
+    Color.fromARGB(255, 0, 0, 0),
+    Color.fromARGB(0, 0, 0, 0),
+  ];
   static List<Color> gradintCoverHomePost = const [
     Color.fromARGB(0, 0, 0, 0),
     Color.fromARGB(195, 72, 20, 88),

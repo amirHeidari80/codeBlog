@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         fontFamily: 'dana',
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyLarge: TextStyle(
             color: MyColors.colorPosterTitle,
             fontSize: 16,
@@ -43,6 +43,21 @@ class MyApp extends StatelessWidget {
             color: MyColors.colorPosterSubText,
             fontSize: 15,
             fontWeight: FontWeight.w500,
+          ),
+          bodySmall: TextStyle(
+            color: MyColors.colorPosterTitle,
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
+          ),
+          titleMedium: TextStyle(
+            color: MyColors.colorTitle,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+          titleLarge: TextStyle(
+            color: MyColors.colorSubText,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
