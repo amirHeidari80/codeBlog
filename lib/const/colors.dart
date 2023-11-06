@@ -13,12 +13,18 @@ class MyColors {
   static const Color colorNavigationBar = Color.fromARGB(255, 255, 255, 255);
   static const Color colorSendArticleBG = Color.fromARGB(255, 209, 209, 209);
   static const Color colorSendPoscasteBG = Color.fromARGB(255, 246, 246, 246);
+  static const Color colorDivider = Color.fromARGB(255, 112, 112, 112);
+  static const Color colorHintText = Color.fromARGB(255, 219, 219, 219);
 }
 
 class MyGradintColors {
   static List<Color> gradintBottomNav = const [
     Color.fromARGB(255, 25, 0, 94),
     Color.fromARGB(255, 67, 4, 87),
+  ];
+  static List<Color> gradintBottomNavBg = const [
+    Color.fromARGB(0, 255, 255, 255),
+    Color.fromARGB(255, 255, 255, 255),
   ];
   static List<Color> gradintTags = const [
     Color.fromARGB(255, 0, 0, 0),

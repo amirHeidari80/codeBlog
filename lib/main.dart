@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_codeblog/const/colors.dart';
-import 'package:flutter_codeblog/splash_screen.dart';
+import 'package:flutter_codeblog/views/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
@@ -32,6 +34,37 @@ class MyApp extends StatelessWidget {
         Locale('fa'), // farsi
       ],
       theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: MyColors.colorPrimery,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                const BorderSide(width: 2, color: MyColors.colorPrimery),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return MyGradintColors.gradintBottomNav[0];
+              } else {
+                return MyGradintColors.gradintBottomNav[1];
+              }
+            }),
+            textStyle: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return theme.textTheme.bodyLarge!.copyWith(fontSize: 18);
+              } else {
+                return theme.textTheme.bodySmall!.copyWith(fontSize: 16);
+              }
+            }),
+          ),
+        ),
         fontFamily: 'dana',
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
@@ -56,12 +89,17 @@ class MyApp extends StatelessWidget {
           ),
           titleLarge: TextStyle(
             color: MyColors.colorSubText,
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+          ),
+          titleSmall: TextStyle(
+            color: MyColors.colorHintText,
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
         ),
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
