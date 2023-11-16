@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_codeblog/const/colors.dart';
+import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/views/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('fa'), // farsi

@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/const/strings.dart';
+import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
-import 'package:flutter_codeblog/my_component.dart';
+import 'package:flutter_codeblog/components/widgets_component.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen(

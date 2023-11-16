@@ -9,9 +9,15 @@ class MyStrings {
   static const String textFavPodcast = 'پادکست های مورد علاقه من';
   static const String textLogOut = 'خروج  از حساب کاربری';
   static const String textInsertEmail = 'لطفا ایمیلت رو وارد کن';
+  static const String textInsertActivateCode = 'کد فعالسازی را وارد کن';
+  static const String textChoosCats = 'دسته بندی هایی که دوست داری انتخاب کن';
   static const String textWelcom = """به تک بلاگ خوش اومدی
 
-برای ارسال مظب و پادکست باید حتما
+برای ارسال مطلب و پادکست باید حتما
 ثبت نام کنی
+""";
+  static const String textSuccessFulRegister =
+      """تبریک میگم ایمیل با موفقیت تایید شد
+لطفا اطلاعات ثبت نام رو کامل کن
 """;
 }

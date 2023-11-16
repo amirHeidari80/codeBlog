@@ -17,6 +17,7 @@ List<Hashtak> listHshtak = [
   Hashtak(title: 'دارت'),
   Hashtak(title: 'فلاتر'),
 ];
+List<Hashtak> insertAddListSkill = [];
 
 List<BlogModel> blogList = [
   BlogModel(

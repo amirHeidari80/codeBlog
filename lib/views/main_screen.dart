@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/const/colors.dart';
+import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/views/home_screen.dart';
 import 'package:flutter_codeblog/views/profile_screen.dart';
@@ -15,6 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 int selectedIndexPage = 0;
+final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
 
 class _MainScreenState extends State<MainScreen> {
   @override
@@ -25,15 +26,77 @@ class _MainScreenState extends State<MainScreen> {
 
     return SafeArea(
       child: Scaffold(
+        key: _keyScaffoldstate,
+        drawer: Drawer(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: bodyMargin),
+            child: ListView(
+              children: [
+                DrawerHeader(
+                  child: Image.asset(
+                    Assets.images.splash.path,
+                    scale: 3,
+                  ),
+                ),
+                ListTile(
+                  onTap: () {},
+                  title: Text(
+                    'پروفایل کاربری',
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ),
+                const Divider(
+                  height: 3,
+                ),
+                ListTile(
+                  onTap: () {},
+                  title: Text(
+                    'درباره تک بللاگ',
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ),
+                const Divider(
+                  height: 3,
+                ),
+                ListTile(
+                  onTap: () {},
+                  title: Text(
+                    'اشتراک گذاری تک بلاگ',
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ),
+                const Divider(
+                  height: 3,
+                ),
+                ListTile(
+                  onTap: () {},
+                  title: Text(
+                    'تک بلاگ در گیت هاب',
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ),
+                const Divider(
+                  height: 3,
+                ),
+              ],
+            ),
+          ),
+        ),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: MyColors.colorScaffoldBG,
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(
-                Icons.menu_rounded,
-                color: MyColors.colorTextTitle,
+              InkWell(
+                onTap: () {
+                  _keyScaffoldstate.currentState!.openDrawer();
+                },
+                child: const Icon(
+                  Icons.menu_rounded,
+                  color: MyColors.colorTextTitle,
+                ),
               ),
               Image.asset(
                 Assets.images.splash.path,
@@ -136,6 +199,7 @@ class BottomNav extends StatelessWidget {
                   Image.asset(Assets.icons.home.path).image,
                   color:
                       selectedIndexPage != 0 ? Colors.grey[400] : Colors.white,
+                  size: selectedIndexPage != 0 ? 25 : 30,
                 ),
               ),
               IconButton(
@@ -144,6 +208,7 @@ class BottomNav extends StatelessWidget {
                   Image.asset(Assets.icons.write.path).image,
                   color:
                       selectedIndexPage != 1 ? Colors.grey[400] : Colors.white,
+                  size: selectedIndexPage != 1 ? 25 : 30,
                 ),
               ),
               IconButton(
@@ -152,6 +217,7 @@ class BottomNav extends StatelessWidget {
                   Image.asset(Assets.icons.user.path).image,
                   color:
                       selectedIndexPage != 2 ? Colors.grey[400] : Colors.white,
+                  size: selectedIndexPage != 2 ? 25 : 30,
                 ),
               ),
             ],
