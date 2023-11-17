@@ -1,25 +1,31 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_codeblog/components/api_constant.dart';
 import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
+import 'package:flutter_codeblog/service/dio_service.dart';
 import 'package:flutter_codeblog/views/home_screen.dart';
 import 'package:flutter_codeblog/views/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_intro.dart';
+import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+// ignore: must_be_immutable
+class MainScreen extends StatelessWidget {
+  Rx<int> selectedIndexPage = 0.obs;
+  final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
+  MainScreen({super.key});
 
-int selectedIndexPage = 0;
-final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
-
-class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    log('message');
+    DioService().getMethod(url: ApiConstant.getHomeItems);
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     var bodyMargin = size.width / 10;
@@ -39,7 +45,10 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    selectedIndexPage.value = 2;
+                    _keyScaffoldstate.currentState!.closeDrawer();
+                  },
                   title: Text(
                     'پروفایل کاربری',
                     style: theme.textTheme.titleLarge,
@@ -59,7 +68,10 @@ class _MainScreenState extends State<MainScreen> {
                   height: 3,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () async {
+                    await Share.share(MyStrings.textShare,
+                        subject: 'اشتراک گذاری تک بلاگ');
+                  },
                   title: Text(
                     'اشتراک گذاری تک بلاگ',
                     style: theme.textTheme.titleLarge,
@@ -69,7 +81,9 @@ class _MainScreenState extends State<MainScreen> {
                   height: 3,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    myUrlLuncher(MyStrings.urlGithub);
+                  },
                   title: Text(
                     'تک بلاگ در گیت هاب',
                     style: theme.textTheme.titleLarge,
@@ -112,35 +126,35 @@ class _MainScreenState extends State<MainScreen> {
         body: Stack(
           children: [
             Positioned.fill(
-              child: IndexedStack(
-                alignment: Alignment.center,
-                index: selectedIndexPage,
-                children: [
-                  HomeScreen(
-                    bodyMargin: bodyMargin,
-                    size: size,
-                    theme: theme,
-                  ),
-                  RegesterIntroScreen(
-                    bodyMargin: bodyMargin,
-                    size: size,
-                    theme: theme,
-                  ),
-                  ProfileScreen(
-                    bodyMargin: bodyMargin,
-                    size: size,
-                    theme: theme,
-                  ),
-                ],
+              child: Obx(
+                () => IndexedStack(
+                  alignment: Alignment.center,
+                  index: selectedIndexPage.value,
+                  children: [
+                    HomeScreen(
+                      bodyMargin: bodyMargin,
+                      size: size,
+                      theme: theme,
+                    ),
+                    RegesterIntroScreen(
+                      bodyMargin: bodyMargin,
+                      size: size,
+                      theme: theme,
+                    ),
+                    ProfileScreen(
+                      bodyMargin: bodyMargin,
+                      size: size,
+                      theme: theme,
+                    ),
+                  ],
+                ),
               ),
             ),
             BottomNav(
               size: size,
               bodyMargin: bodyMargin,
               callBackDataOnTap: (int value) {
-                setState(() {
-                  selectedIndexPage = value;
-                });
+                selectedIndexPage.value = value;
               },
               selectedIndexPage: selectedIndexPage,
             ),
@@ -162,7 +176,7 @@ class BottomNav extends StatelessWidget {
 
   final Size size;
   final double bodyMargin;
-  final int selectedIndexPage;
+  final Rx<int> selectedIndexPage;
   final void Function(int) callBackDataOnTap;
 
   @override
@@ -190,37 +204,42 @@ class BottomNav extends StatelessWidget {
               end: Alignment.centerRight,
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () => callBackDataOnTap(0),
-                icon: ImageIcon(
-                  Image.asset(Assets.icons.home.path).image,
-                  color:
-                      selectedIndexPage != 0 ? Colors.grey[400] : Colors.white,
-                  size: selectedIndexPage != 0 ? 25 : 30,
+          child: Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () => callBackDataOnTap(0),
+                  icon: ImageIcon(
+                    Image.asset(Assets.icons.home.path).image,
+                    color: selectedIndexPage.value != 0
+                        ? Colors.grey[400]
+                        : Colors.white,
+                    size: selectedIndexPage.value != 0 ? 25 : 30,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () => callBackDataOnTap(1),
-                icon: ImageIcon(
-                  Image.asset(Assets.icons.write.path).image,
-                  color:
-                      selectedIndexPage != 1 ? Colors.grey[400] : Colors.white,
-                  size: selectedIndexPage != 1 ? 25 : 30,
+                IconButton(
+                  onPressed: () => callBackDataOnTap(1),
+                  icon: ImageIcon(
+                    Image.asset(Assets.icons.write.path).image,
+                    color: selectedIndexPage.value != 1
+                        ? Colors.grey[400]
+                        : Colors.white,
+                    size: selectedIndexPage.value != 1 ? 25 : 30,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () => callBackDataOnTap(2),
-                icon: ImageIcon(
-                  Image.asset(Assets.icons.user.path).image,
-                  color:
-                      selectedIndexPage != 2 ? Colors.grey[400] : Colors.white,
-                  size: selectedIndexPage != 2 ? 25 : 30,
+                IconButton(
+                  onPressed: () => callBackDataOnTap(2),
+                  icon: ImageIcon(
+                    Image.asset(Assets.icons.user.path).image,
+                    color: selectedIndexPage.value != 2
+                        ? Colors.grey[400]
+                        : Colors.white,
+                    size: selectedIndexPage.value != 2 ? 25 : 30,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

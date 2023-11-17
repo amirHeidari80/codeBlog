@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TitleIconString extends StatelessWidget {
   TitleIconString({
@@ -92,5 +93,14 @@ class InkWellTextBtnDraverAndProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+myUrlLuncher(String url) async {
+  var uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    print("myUrlLuncher is Can't Url: $url ");
   }
 }

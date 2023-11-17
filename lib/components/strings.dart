@@ -1,4 +1,5 @@
 class MyStrings {
+  static const String urlGithub = 'https://github.com/amirHeidari80/codeBlog';
   static const String textViweHotBlog = 'مشاهده داغ ترین نوشته ها';
   static const String textViweHotPodcast = 'مشاهده داغ ترین پادکست ها';
   static const String textRelatedArticle = 'نوشته های مرتبط';
@@ -19,5 +20,9 @@ class MyStrings {
   static const String textSuccessFulRegister =
       """تبریک میگم ایمیل با موفقیت تایید شد
 لطفا اطلاعات ثبت نام رو کامل کن
+""";
+  static const String textShare =
+      """سلاممم من از تک بلاگ استفاده میکنم. پیشنهاد میکنم توام ازش استفاده کنی\n
+iran.ir
 """;
 }

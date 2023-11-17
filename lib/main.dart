@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/views/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -23,15 +24,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('fa'), // farsi
+        Locale("fa", "IR"),
       ],
+      locale: const Locale("fa", "IR"),
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: MyColors.colorPrimery,
