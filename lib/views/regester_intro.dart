@@ -170,10 +170,7 @@ class RegesterIntroScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(context, CupertinoPageRoute(
                               builder: (BuildContext context) {
-                            return MyCatsScreen(
-                                theme: theme,
-                                size: size,
-                                bodyMargin: bodyMargin);
+                            return MyCatsScreen();
                           }));
                         },
                         child: SizedBox(

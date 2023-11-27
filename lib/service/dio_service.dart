@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 class DioService {
@@ -13,10 +12,10 @@ class DioService {
             responseType: ResponseType.json,
             method: "GET",
           ));
-      log(result.toString());
+      log("#Result GetMethod $result");
       return result;
     } catch (e) {
-      log(e.toString());
+      log("#Catch Get Method => $e");
     }
   }
 }

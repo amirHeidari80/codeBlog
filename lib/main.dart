@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/views/article_list_screen.dart';
 import 'package:flutter_codeblog/views/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -99,9 +100,14 @@ class MyApp extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
+          displayLarge: TextStyle(
+            color: MyColors.colorPrimery,
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
+          ),
         ),
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

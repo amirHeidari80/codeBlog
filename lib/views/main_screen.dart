@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/api_constant.dart';
 import 'package:flutter_codeblog/components/colors.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/service/dio_service.dart';
+import 'package:flutter_codeblog/views/article_list_screen.dart';
 import 'package:flutter_codeblog/views/home_screen.dart';
 import 'package:flutter_codeblog/views/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_intro.dart';
@@ -24,8 +23,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('message');
-    DioService().getMethod(url: ApiConstant.getHomeItems);
+    // DioService().getMethod(url: ApiConstant.getHomeItemsUrl);
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     var bodyMargin = size.width / 10;
@@ -58,7 +56,14 @@ class MainScreen extends StatelessWidget {
                   height: 3,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    //TODO این تست صفجه ارتیکل لیست است
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ArticleListScreen()));
+                  },
                   title: Text(
                     'درباره تک بللاگ',
                     style: theme.textTheme.titleLarge,
@@ -116,9 +121,14 @@ class MainScreen extends StatelessWidget {
                 Assets.images.splash.path,
                 height: size.height / 14.6,
               ),
-              const Icon(
-                Icons.search_rounded,
-                color: MyColors.colorTextTitle,
+              InkWell(
+                onTap: () {
+                  //TODO این تست صفجه بلاگ است
+                },
+                child: const Icon(
+                  Icons.search_rounded,
+                  color: MyColors.colorTextTitle,
+                ),
               ),
             ],
           ),

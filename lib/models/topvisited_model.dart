@@ -1,7 +1,9 @@
-class ArticleModel {
+import 'package:flutter_codeblog/components/api_constant.dart';
+
+class TopVisitedModel {
   String? id, title, image, catId, catName, author, view, status, createdAt;
 
-  ArticleModel({
+  TopVisitedModel({
     required this.id,
     required this.title,
     required this.image,
@@ -13,10 +15,10 @@ class ArticleModel {
     required this.createdAt,
   });
 
-  ArticleModel.fromjson(Map<String, dynamic> element) {
+  TopVisitedModel.fromjson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
-    image = element["image"];
+    image = ApiConstant.dominUrl + element["image"];
     catId = element["cat_id"];
     catName = element["cat_name"];
     author = element["author"];

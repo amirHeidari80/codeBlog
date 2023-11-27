@@ -1,11 +1,12 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/controller/home_screen_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
-import 'package:flutter_codeblog/models/fakedata.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen(
@@ -14,6 +15,9 @@ class HomeScreen extends StatelessWidget {
       required this.size,
       required this.bodyMargin});
 
+//فراخانی کلاس کنترلر
+  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+
   var theme;
   final Size size;
   final double bodyMargin;
@@ -21,57 +25,53 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 8,
-          ),
-          HomePagePoster(size: size, theme: theme),
-          const SizedBox(
-            height: 16,
-          ),
-          HomePageHashtagList(size: size, bodyMargin: bodyMargin, theme: theme),
-          Padding(
-            padding: EdgeInsets.only(right: bodyMargin, top: 28, bottom: 8),
-            child: TitleIconString(
-              theme: theme,
-              imageName: Assets.icons.bluePen,
-              title: MyStrings.textViweHotBlog,
-            ),
-          ),
-          HomePageTextsList(size: size, bodyMargin: bodyMargin, theme: theme),
-          Padding(
-            padding: EdgeInsets.only(right: bodyMargin, top: 16, bottom: 8),
-            child: TitleIconString(
-              theme: theme,
-              imageName: Assets.icons.microphon,
-              title: MyStrings.textViweHotPodcast,
-            ),
-          ),
-          HomePagePodcastList(size: size, bodyMargin: bodyMargin, theme: theme),
-          SizedBox(
-            height: size.height / 13,
-          ),
-        ],
-      ),
-    );
+        physics: const BouncingScrollPhysics(),
+        child: Obx(
+          () => homeScreenController.isLoading.value == false
+              ? Column(
+                  children: [
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    // homePagePoster
+                    homePagePoster(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    // homePageTagsList
+                    homePageTagsList(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: bodyMargin, top: 28, bottom: 8),
+                      child: TitleIconString(
+                        theme: theme,
+                        imageName: Assets.icons.bluePen,
+                        title: MyStrings.textViweHotBlog,
+                      ),
+                    ),
+                    // homePageTopVisitedList
+                    homePageTopVisitedList(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: bodyMargin, top: 16, bottom: 8),
+                      child: TitleIconString(
+                        theme: theme,
+                        imageName: Assets.icons.microphon,
+                        title: MyStrings.textViweHotPodcast,
+                      ),
+                    ),
+                    // homePagePodcastList
+                    homePagePodcastList(),
+                    SizedBox(
+                      height: size.height / 13,
+                    ),
+                  ],
+                )
+              : const SpinKitWidgetItems(),
+        ));
   }
-}
 
-class HomePagePoster extends StatelessWidget {
-  HomePagePoster({
-    super.key,
-    required this.size,
-    required this.theme,
-  });
-
-  final Size size;
-
-  var theme;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget homePagePoster() {
     return SizedBox(
       width: size.width / 1.19,
       height: size.height / 4.2,
@@ -80,9 +80,6 @@ class HomePagePoster extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: Image.asset(homePagePosterMap["imageUrl"]).image),
               borderRadius: BorderRadius.circular(20),
               gradient: LinearGradient(
                 colors: MyGradintColors.gradintCoverHomePost,
@@ -98,6 +95,24 @@ class HomePagePoster extends StatelessWidget {
                 end: Alignment.bottomCenter,
               ),
             ),
+            child: CachedNetworkImage(
+              imageUrl: (homeScreenController.posterItem.value.image!),
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: imageProvider,
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => const SpinKitWidgetItems(),
+              errorWidget: (context, url, error) => const Icon(
+                Icons.image_not_supported_outlined,
+                size: 50,
+                color: MyColors.colorDivider,
+              ),
+            ),
           ),
           Positioned(
             left: 10,
@@ -106,23 +121,8 @@ class HomePagePoster extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      homePagePosterMap["writer"] +
-                          ' - ' +
-                          homePagePosterMap["date"],
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    Text(
-                      homePagePosterMap["viwe"],
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
                 Text(
-                  homePagePosterMap["title"],
+                  homeScreenController.posterItem.value.title!,
                   style: theme.textTheme.bodyLarge,
                 ),
               ],
@@ -132,27 +132,13 @@ class HomePagePoster extends StatelessWidget {
       ),
     );
   }
-}
 
-class HomePageHashtagList extends StatelessWidget {
-  HomePageHashtagList({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.theme,
-  });
-
-  final Size size;
-  final double bodyMargin;
-  var theme;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget homePageTagsList() {
     return SizedBox(
       height: 40,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: listHshtak.length,
+          itemCount: homeScreenController.tagsList.length,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return Padding(
@@ -181,7 +167,7 @@ class HomePageHashtagList extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        listHshtak[index].title.toString(),
+                        homeScreenController.tagsList[index].title!,
                         style: theme.textTheme.bodySmall,
                       ),
                     ],
@@ -192,28 +178,14 @@ class HomePageHashtagList extends StatelessWidget {
           }),
     );
   }
-}
 
-class HomePageTextsList extends StatelessWidget {
-  HomePageTextsList({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.theme,
-  });
-
-  final Size size;
-  final double bodyMargin;
-  var theme;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget homePageTopVisitedList() {
     return SizedBox(
       height: size.height / 3.5,
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
-          itemCount: blogList.length,
+          itemCount: homeScreenController.topvisitedList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding:
@@ -228,10 +200,6 @@ class HomePageTextsList extends StatelessWidget {
                           height: size.height / 4.7,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(blogList[index].imageUrl),
-                            ),
                           ),
                           foregroundDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
@@ -239,6 +207,26 @@ class HomePageTextsList extends StatelessWidget {
                                   colors: MyGradintColors.gradintBlogs,
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter)),
+                          child: CachedNetworkImage(
+                            imageUrl: (homeScreenController
+                                .topvisitedList[index].image!),
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: imageProvider,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) =>
+                                const SpinKitWidgetItems(),
+                            errorWidget: (context, url, error) => const Icon(
+                              Icons.image_not_supported_outlined,
+                              size: 50,
+                              color: MyColors.colorDivider,
+                            ),
+                          ),
                         ),
                         Positioned(
                           left: 10,
@@ -249,12 +237,14 @@ class HomePageTextsList extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  blogList[index].writer,
+                                  homeScreenController
+                                      .topvisitedList[index].author!,
                                   style: theme.textTheme.bodyMedium,
                                 ),
                               ),
                               Text(
-                                blogList[index].views,
+                                homeScreenController
+                                    .topvisitedList[index].view!,
                                 style: theme.textTheme.bodyMedium,
                               ),
                               const Icon(
@@ -271,7 +261,7 @@ class HomePageTextsList extends StatelessWidget {
                       height: 3,
                     ),
                     Text(
-                      blogList[index].title,
+                      homeScreenController.topvisitedList[index].title!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: theme.textTheme.titleLarge,
@@ -283,28 +273,14 @@ class HomePageTextsList extends StatelessWidget {
           }),
     );
   }
-}
 
-class HomePagePodcastList extends StatelessWidget {
-  HomePagePodcastList({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.theme,
-  });
-
-  final Size size;
-  final double bodyMargin;
-  var theme;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget homePagePodcastList() {
     return SizedBox(
       height: size.height / 4.15,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
-          itemCount: blogList.getRange(4, 10).length,
+          itemCount: homeScreenController.podcastList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding:
@@ -313,13 +289,32 @@ class HomePagePodcastList extends StatelessWidget {
                 width: size.width / 2.4,
                 child: Column(
                   children: [
-                    Container(
-                      height: size.height / 5.2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(blogList[index].imageUrl),
+                    CachedNetworkImage(
+                      imageUrl:
+                          (homeScreenController.podcastList[index].poster!),
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          height: size.height / 5.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(homeScreenController
+                                  .podcastList[index].poster!),
+                            ),
+                          ),
+                        );
+                      },
+                      placeholder: (context, url) => SizedBox(
+                        height: size.height / 5.2,
+                        child: const SpinKitWidgetItems(),
+                      ),
+                      errorWidget: (context, url, error) => SizedBox(
+                        height: size.height / 5.2,
+                        child: const Icon(
+                          Icons.image_not_supported_outlined,
+                          size: 50,
+                          color: MyColors.colorDivider,
                         ),
                       ),
                     ),
@@ -327,7 +322,7 @@ class HomePagePodcastList extends StatelessWidget {
                       height: 3,
                     ),
                     Text(
-                      blogList[index].title,
+                      homeScreenController.podcastList[index].title!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: theme.textTheme.titleLarge,
