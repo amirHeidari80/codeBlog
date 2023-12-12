@@ -82,12 +82,4 @@ class RegesterController extends GetxController {
       showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
-
-  toggleWrite({required BuildContext context}) {
-    if (box.read(tokenKey) == null) {
-      Get.toNamed(routeRegesterScreen);
-    } else {
-      showErorrSnackBar(message: 'پست بذار', title: 'موفق');
-    }
-  }
 }

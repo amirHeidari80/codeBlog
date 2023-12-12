@@ -6,10 +6,10 @@ import 'package:flutter_codeblog/models/article_info_model.dart';
 import 'package:flutter_codeblog/models/tags_model.dart';
 import 'package:flutter_codeblog/models/topvisited_model.dart';
 import 'package:flutter_codeblog/service/dio_service.dart';
-import 'package:flutter_codeblog/views/article_info_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_info_screen.dart';
 import 'package:get/get.dart';
 
-class InfoArticleController extends GetxController {
+class ArticleInfoController extends GetxController {
   Rx<ArticleInfoModel> articleInfoList = ArticleInfoModel().obs;
   RxList<TopVisitedModel> relatedList = RxList();
   RxList<TagsModel> tagsList = RxList();

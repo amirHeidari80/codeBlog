@@ -143,8 +143,9 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
             color: MyColors.colorPrimery.withOpacity(0.8),
           ),
           child: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            Icons.arrow_back,
             size: 20,
+            color: Colors.white,
           ),
         ),
       ),

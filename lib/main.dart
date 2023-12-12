@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_codeblog/binding.dart';
+import 'package:flutter_codeblog/bindings.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/my_http_overrides.dart';
-import 'package:flutter_codeblog/views/article_list_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_info_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/main_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale("fa", "IR"),
+      themeMode: ThemeMode.light,
       theme: lightTheme(theme),
       initialRoute: routeSplashScreen,
       initialBinding: HomeBinding(),
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
             transition: Transition.cupertino),
         GetPage(
             name: routeInfoArtcleScreen,
-            page: () => ArticleListScreen(),
+            page: () => ArticleInfoScreen(),
             bindings: [RegesterBinding()],
             transition: Transition.cupertino),
         GetPage(

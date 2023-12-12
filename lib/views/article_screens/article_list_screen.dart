@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
-import 'package:flutter_codeblog/controller/list_article_controller.dart';
-import 'package:flutter_codeblog/controller/info_article_controller.dart';
+import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
+import 'package:flutter_codeblog/controller/article/article_info_controller.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
@@ -10,9 +10,9 @@ class ArticleListScreen extends StatelessWidget {
   ArticleListScreen({super.key, this.title});
   String? title;
 
-  var listArticleController = Get.find<ListArticleController>();
+  var listArticleController = Get.find<ArticleListController>();
 
-  var infoArticleController = Get.find<InfoArticleController>();
+  var infoArticleController = Get.find<ArticleInfoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +82,8 @@ class ArticleListScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           listArticleController
@@ -94,6 +96,8 @@ class ArticleListScreen extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               listArticleController

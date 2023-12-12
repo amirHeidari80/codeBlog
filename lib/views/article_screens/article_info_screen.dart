@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
-import 'package:flutter_codeblog/controller/info_article_controller.dart';
-import 'package:flutter_codeblog/controller/list_article_controller.dart';
+import 'package:flutter_codeblog/controller/article/article_info_controller.dart';
+import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class ArticleInfoScreen extends StatelessWidget {
   ArticleInfoScreen({super.key});
-  InfoArticleController infoArticleController =
-      Get.find<InfoArticleController>();
+  ArticleInfoController infoArticleController =
+      Get.find<ArticleInfoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +181,7 @@ class ArticleInfoScreen extends StatelessWidget {
                   EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 10),
               child: InkWell(
                 onTap: () {
-                  Get.find<ListArticleController>().getArticlesWithTagId(
+                  Get.find<ArticleListController>().getArticlesWithTagId(
                       id: infoArticleController.tagsList[index].id,
                       title: infoArticleController.tagsList[index].title!);
                 },

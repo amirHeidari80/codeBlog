@@ -4,11 +4,11 @@ import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/components/storage_key.dart';
 import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
-import 'package:flutter_codeblog/controller/regester_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/views/main_screens/home_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,7 +18,6 @@ class MainScreen extends StatelessWidget {
   MainScreen({super.key});
   Rx<int> selectedIndexPage = 0.obs;
   final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
-  final _regesterController = Get.find<RegesterController>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -147,8 +146,114 @@ class MainScreen extends StatelessWidget {
                 if (value == 1) {
                   GetStorage().read(tokenKey) == null
                       ? selectedIndexPage.value = value
-                      : showErorrSnackBar(
-                          message: 'شما ثبت نام هستید پست بذار', title: 'موفق');
+                      : showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: size.height / 3,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(16),
+                                  topRight: Radius.circular(16),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
+                                        width: 40,
+                                        height: 5,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          Assets.images.tcbot.path,
+                                          height: 50,
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          "دونسته هاتو با بقیه به اشتراک بذار ...",
+                                          style: theme.textTheme.titleLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      """فکر کن!!! اینجا هستی یک گیگ تکنولوژِی هستی تجربیاتت رو با جامعه فارسی یه اشتراک بذار""",
+                                      style: theme.textTheme.titleLarge,
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  Assets.icons.writeArticleIcon
+                                                      .path,
+                                                  height: 25,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  "مدیریت مقاله ها",
+                                                  style: theme
+                                                      .textTheme.titleLarge,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  Assets.icons.writePodcastIcon
+                                                      .path,
+                                                  height: 25,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  "مدیریت پادکست ها",
+                                                  style: theme
+                                                      .textTheme.titleLarge,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
                 } else {
                   selectedIndexPage.value = value;
                 }

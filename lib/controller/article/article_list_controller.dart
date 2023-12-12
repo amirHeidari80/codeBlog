@@ -4,10 +4,10 @@ import 'package:flutter_codeblog/components/api_constant.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/models/topvisited_model.dart';
 import 'package:flutter_codeblog/service/dio_service.dart';
-import 'package:flutter_codeblog/views/article_list_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart';
 import 'package:get/get.dart';
 
-class ListArticleController extends GetxController {
+class ArticleListController extends GetxController {
   RxList<TopVisitedModel> articleList = RxList();
   Rx isLoading = false.obs;
 
