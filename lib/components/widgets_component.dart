@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, must_be_immutable
 
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TitleIconString extends StatelessWidget {
@@ -124,7 +124,7 @@ myUrlLuncher(String url) async {
 PreferredSize appBarAllPage(BuildContext context, String title) {
   var theme = Theme.of(context);
   return PreferredSize(
-    preferredSize: const Size.fromHeight(60),
+    preferredSize: const Size.fromHeight(45),
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: AppBar(
@@ -144,7 +144,7 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
           ),
           child: const Icon(
             Icons.arrow_back_ios_new_rounded,
-            size: 24,
+            size: 20,
           ),
         ),
       ),
@@ -152,10 +152,36 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
   );
 }
 
-amir(BuildContext context) {
-  var size = MediaQuery.of(context).size;
-  // ignore: unused_local_variable
-  var theme = Theme.of(context);
-  // ignore: unused_local_variable
-  var bodyMargin = size.width / 10;
+SnackbarController showErorrSnackBar(
+    {required String message, required String title}) {
+  return Get.snackbar('', '',
+      backgroundGradient: LinearGradient(
+        colors: [MyColors.colorPrimery, MyColors.colorPrimery.withOpacity(0.2)],
+        end: Alignment.centerLeft,
+        begin: Alignment.centerRight,
+      ),
+      titleText: Text(
+        title,
+        style: TextStyle(
+          color: title == "خطا" ? Colors.redAccent : Colors.greenAccent,
+        ),
+      ),
+      messageText: Text(message),
+      backgroundColor: MyColors.colorPrimery.withOpacity(0.9),
+      onTap: (GetSnackBar a) {
+    Get.closeAllSnackbars();
+  },
+      snackPosition: SnackPosition.TOP,
+      dismissDirection: DismissDirection.endToStart,
+      icon: title == "خطا"
+          ? const Icon(
+              Icons.error,
+              size: 30,
+              color: Colors.redAccent,
+            )
+          : const Icon(
+              Icons.task_alt_outlined,
+              size: 30,
+              color: Colors.greenAccent,
+            ));
 }

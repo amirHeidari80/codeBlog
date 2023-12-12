@@ -2,17 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/components/strings.dart';
-import 'package:flutter_codeblog/controller/home_screen_controller.dart';
+import 'package:flutter_codeblog/controller/home_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/models/tags_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class MyCatsScreen extends StatelessWidget {
-  TextEditingController emailEditingController = TextEditingController();
-
-  TextEditingController activeCodeEditingController = TextEditingController();
-
   RxList<TagsModel> insertAddListSkill = RxList();
 
   MyCatsScreen({super.key});
@@ -73,9 +69,8 @@ class MyCatsScreen extends StatelessWidget {
                         child: GridView.builder(
                             physics: const ClampingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
-                            itemCount: Get.find<HomeScreenController>()
-                                .tagsList
-                                .length,
+                            itemCount:
+                                Get.find<HomeController>().tagsList.length,
                             shrinkWrap: true,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -88,10 +83,10 @@ class MyCatsScreen extends StatelessWidget {
                               return InkWell(
                                 onTap: () {
                                   if (!insertAddListSkill.contains(
-                                      Get.find<HomeScreenController>()
+                                      Get.find<HomeController>()
                                           .tagsList[index])) {
                                     insertAddListSkill.add(
-                                        Get.find<HomeScreenController>()
+                                        Get.find<HomeController>()
                                             .tagsList[index]);
                                   }
                                 },
@@ -120,7 +115,7 @@ class MyCatsScreen extends StatelessWidget {
                                         ),
                                         Flexible(
                                           child: Text(
-                                            Get.find<HomeScreenController>()
+                                            Get.find<HomeController>()
                                                 .tagsList[index]
                                                 .title!,
                                             style: theme.textTheme.bodySmall,

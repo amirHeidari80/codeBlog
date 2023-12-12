@@ -1,111 +1,125 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
-import 'package:flutter_codeblog/controller/article_controller.dart';
+import 'package:flutter_codeblog/controller/list_article_controller.dart';
+import 'package:flutter_codeblog/controller/info_article_controller.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class ArticleListScreen extends StatelessWidget {
-  ArticleListScreen({super.key});
+  ArticleListScreen({super.key, this.title});
+  String? title;
 
-  ArticleController articleController = Get.put(ArticleController());
+  var listArticleController = Get.find<ListArticleController>();
+
+  var infoArticleController = Get.find<InfoArticleController>();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
-    var bodyMargin = size.width / 10;
+
     return SafeArea(
       child: Scaffold(
-          appBar: appBarAllPage(context, 'مقالات جدید'),
+          appBar: appBarAllPage(context, title!),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SizedBox(
               child: Obx(
-                () => articleController.isLoading.value == false
+                () => listArticleController.isLoading.value == false
                     ? ListView.builder(
                         physics: const BouncingScrollPhysics(),
-                        itemCount: articleController.articleList.length,
+                        itemCount: listArticleController.articleList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: CachedNetworkImage(
-                                    imageUrl: articleController
-                                        .articleList[index].image!,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: size.width / 3.5,
-                                      height: size.width / 3.5,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover),
+                          return GestureDetector(
+                            onTap: () {
+                              infoArticleController.getArticleInfo(
+                                  id: listArticleController
+                                      .articleList[index].id!);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: CachedNetworkImage(
+                                      imageUrl: listArticleController
+                                          .articleList[index].image!,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: size.width / 3.5,
+                                        height: size.width / 3.5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                        ),
                                       ),
-                                    ),
-                                    placeholder: (context, url) => SizedBox(
+                                      placeholder: (context, url) => SizedBox(
+                                          width: size.width / 3.5,
+                                          height: size.width / 3.5,
+                                          child: const Center(
+                                              child: SpinKitWidgetItems())),
+                                      errorWidget: (context, url, error) =>
+                                          SizedBox(
                                         width: size.width / 3.5,
                                         height: size.width / 3.5,
                                         child: const Center(
-                                            child: SpinKitWidgetItems())),
-                                    errorWidget: (context, url, error) =>
-                                        SizedBox(
-                                      width: size.width / 3.5,
-                                      height: size.width / 3.5,
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.image_not_supported_outlined,
-                                          size: 50,
-                                          color: Colors.grey,
+                                          child: Icon(
+                                            Icons.image_not_supported_outlined,
+                                            size: 50,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        articleController
-                                            .articleList[index].title!,
-                                        style: theme.textTheme.titleLarge,
-                                        overflow: TextOverflow.visible,
-                                        maxLines: 2,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            articleController
-                                                .articleList[index].author!,
-                                            style: theme.textTheme.titleLarge!
-                                                .copyWith(color: Colors.grey),
-                                            overflow: TextOverflow.visible,
-                                            maxLines: 2,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "${articleController.articleList[index].view!} بازدید ",
-                                            style: theme.textTheme.titleLarge!
-                                                .copyWith(color: Colors.grey),
-                                            overflow: TextOverflow.visible,
-                                            maxLines: 2,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  const SizedBox(
+                                    width: 10,
                                   ),
-                                ),
-                              ],
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          listArticleController
+                                              .articleList[index].title!,
+                                          style: theme.textTheme.titleLarge,
+                                          overflow: TextOverflow.visible,
+                                          maxLines: 2,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              listArticleController
+                                                  .articleList[index].author!,
+                                              style: theme.textTheme.titleLarge!
+                                                  .copyWith(color: Colors.grey),
+                                              overflow: TextOverflow.visible,
+                                              maxLines: 2,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "${listArticleController.articleList[index].view!} بازدید ",
+                                              style: theme.textTheme.titleLarge!
+                                                  .copyWith(color: Colors.grey),
+                                              overflow: TextOverflow.visible,
+                                              maxLines: 2,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         })

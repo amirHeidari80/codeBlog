@@ -5,17 +5,14 @@ import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen(
-      {super.key,
-      required this.theme,
-      required this.size,
-      required this.bodyMargin});
-  final Size size;
-  final double bodyMargin;
-  var theme;
+  const ProfileScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var theme = Theme.of(context);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(

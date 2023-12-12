@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter_codeblog/components/api_constant.dart';
+import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/models/podcast_model.dart';
 import 'package:flutter_codeblog/models/poster_model.dart';
 import 'package:flutter_codeblog/models/tags_model.dart';
@@ -8,20 +8,13 @@ import 'package:flutter_codeblog/models/topvisited_model.dart';
 import 'package:flutter_codeblog/service/dio_service.dart';
 import 'package:get/get.dart';
 
-class HomeScreenController extends GetxController {
+class HomeController extends GetxController {
   Rx<PosterModel> posterItem = PosterModel().obs;
   RxList<TagsModel> tagsList = RxList();
   RxList<TopVisitedModel> topvisitedList = RxList();
   RxList<PodcastModel> podcastList = RxList();
 
   RxBool isLoading = false.obs;
-
-  //درخواست دیتا با هربار فراخانی کلاس کنترلر
-  @override
-  onInit() {
-    super.onInit();
-    getHomeItems();
-  }
 
   getHomeItems() async {
     try {
@@ -36,7 +29,7 @@ class HomeScreenController extends GetxController {
         });
         // created Top Podcasts list
         response.data['top_podcasts'].forEach((element) {
-          podcastList.add(PodcastModel.fromjsaon(element));
+          podcastList.add(PodcastModel.fromjson(element));
         });
         // created  posterItem
         posterItem.value = PosterModel.fromjson(response.data['poster']);
@@ -48,6 +41,7 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log("#Catch Get Home Items => $e");
+      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 }

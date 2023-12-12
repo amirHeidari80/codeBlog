@@ -1,29 +1,26 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/api_constant.dart';
 import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/storage_key.dart';
 import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
+import 'package:flutter_codeblog/controller/regester_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
-import 'package:flutter_codeblog/service/dio_service.dart';
-import 'package:flutter_codeblog/views/article_list_screen.dart';
-import 'package:flutter_codeblog/views/home_screen.dart';
-import 'package:flutter_codeblog/views/profile_screen.dart';
-import 'package:flutter_codeblog/views/regester_intro.dart';
+import 'package:flutter_codeblog/views/main_screens/home_screen.dart';
+import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
+import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatelessWidget {
+  MainScreen({super.key});
   Rx<int> selectedIndexPage = 0.obs;
   final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
-
-  MainScreen({super.key});
-
+  final _regesterController = Get.find<RegesterController>();
   @override
   Widget build(BuildContext context) {
-    // DioService().getMethod(url: ApiConstant.getHomeItemsUrl);
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     var bodyMargin = size.width / 10;
@@ -56,14 +53,7 @@ class MainScreen extends StatelessWidget {
                   height: 3,
                 ),
                 ListTile(
-                  onTap: () {
-                    //TODO این تست صفجه ارتیکل لیست است
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ArticleListScreen()));
-                  },
+                  onTap: () {},
                   title: Text(
                     'درباره تک بللاگ',
                     style: theme.textTheme.titleLarge,
@@ -122,9 +112,7 @@ class MainScreen extends StatelessWidget {
                 height: size.height / 14.6,
               ),
               InkWell(
-                onTap: () {
-                  //TODO این تست صفجه بلاگ است
-                },
+                onTap: () {},
                 child: const Icon(
                   Icons.search_rounded,
                   color: MyColors.colorTextTitle,
@@ -146,16 +134,8 @@ class MainScreen extends StatelessWidget {
                       size: size,
                       theme: theme,
                     ),
-                    RegesterIntroScreen(
-                      bodyMargin: bodyMargin,
-                      size: size,
-                      theme: theme,
-                    ),
-                    ProfileScreen(
-                      bodyMargin: bodyMargin,
-                      size: size,
-                      theme: theme,
-                    ),
+                    const RegesterIntroScreen(),
+                    const ProfileScreen(),
                   ],
                 ),
               ),
@@ -164,7 +144,14 @@ class MainScreen extends StatelessWidget {
               size: size,
               bodyMargin: bodyMargin,
               callBackDataOnTap: (int value) {
-                selectedIndexPage.value = value;
+                if (value == 1) {
+                  GetStorage().read(tokenKey) == null
+                      ? selectedIndexPage.value = value
+                      : showErorrSnackBar(
+                          message: 'شما ثبت نام هستید پست بذار', title: 'موفق');
+                } else {
+                  selectedIndexPage.value = value;
+                }
               },
               selectedIndexPage: selectedIndexPage,
             ),
@@ -188,7 +175,6 @@ class BottomNav extends StatelessWidget {
   final double bodyMargin;
   final Rx<int> selectedIndexPage;
   final void Function(int) callBackDataOnTap;
-
   @override
   Widget build(BuildContext context) {
     return Positioned(

@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/controller/home_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
-import 'package:flutter_codeblog/views/main_screen.dart';
+import 'package:flutter_codeblog/main.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,11 +17,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // فراخوانی وبسرویس هوم و ارتیکل لیست
+    Get.find<HomeController>().getHomeItems();
 
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.pushReplacement(
-        context,
-        CupertinoPageRoute(builder: (context) => MainScreen()),
+      Get.offAndToNamed(
+        routeMainScreen,
       );
     });
   }

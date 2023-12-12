@@ -3,16 +3,12 @@ import 'package:flutter_codeblog/components/api_constant.dart';
 class PosterModel {
   String? id, title, image;
 
-  PosterModel({
-    id,
-    title,
-    image,
-  });
+  PosterModel();
 
   PosterModel.fromjson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
-    image = ApiConstant.dominUrl + element["image"];
+    image = ApiConstant.domainUrl + element["image"];
   }
 }
 

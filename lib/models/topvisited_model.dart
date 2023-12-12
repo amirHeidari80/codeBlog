@@ -2,29 +2,21 @@ import 'package:flutter_codeblog/components/api_constant.dart';
 
 class TopVisitedModel {
   String? id, title, image, catId, catName, author, view, status, createdAt;
+  bool? isFavorite;
 
-  TopVisitedModel({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.catId,
-    required this.catName,
-    required this.author,
-    required this.view,
-    required this.status,
-    required this.createdAt,
-  });
+  TopVisitedModel();
 
   TopVisitedModel.fromjson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
-    image = ApiConstant.dominUrl + element["image"];
+    image = ApiConstant.domainUrl + element["image"];
     catId = element["cat_id"];
     catName = element["cat_name"];
-    author = element["author"];
+    author = element["author"] ?? 'امیر حیدری';
     view = element["view"];
     status = element["status"];
     createdAt = element["created_at"];
+    isFavorite = element["isFavorite"] ?? false;
   }
 }
 
@@ -37,3 +29,14 @@ class TopVisitedModel {
             // "view": "3659",
             // "status": "1",
             // "created_at": "۱۴۰۱/۲/۱۶"
+
+        //        "id": "255",
+        // "title": "مفهوم  نوآوری باز",
+        // "image": "/Techblog/assets/upload/images/article/20231114102501.jpg",
+        // "cat_id": "4",
+        // "cat_name": "سخت افزار",
+        // "author": "''",
+        // "view": "21",
+        // "status": "0",
+        // "isFavorite": false,
+        // "created_at": "۱۴۰۲/۸/۲۳"
