@@ -1,7 +1,8 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, avoid_print
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/controller/article/article_manage_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
@@ -15,8 +16,6 @@ class ArticleManageScreen extends StatelessWidget {
   var articleManageController = Get.find<ArticleManageController>();
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
     return SafeArea(
       child: Scaffold(
         appBar: appBarAllPage(context, 'مدیریت مقاله ها'),
@@ -46,8 +45,9 @@ class ArticleManageScreen extends StatelessWidget {
                                         imageBuilder:
                                             (context, imageProvider) =>
                                                 Container(
-                                          width: size.width / 3.5,
-                                          height: size.width / 3.5,
+                                          width: context.screenSize.width / 3.5,
+                                          height:
+                                              context.screenSize.width / 3.5,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(16),
@@ -57,14 +57,17 @@ class ArticleManageScreen extends StatelessWidget {
                                           ),
                                         ),
                                         placeholder: (context, url) => SizedBox(
-                                            width: size.width / 3.5,
-                                            height: size.width / 3.5,
+                                            width:
+                                                context.screenSize.width / 3.5,
+                                            height:
+                                                context.screenSize.width / 3.5,
                                             child: const Center(
                                                 child: SpinKitWidgetItems())),
                                         errorWidget: (context, url, error) =>
                                             SizedBox(
-                                          width: size.width / 3.5,
-                                          height: size.width / 3.5,
+                                          width: context.screenSize.width / 3.5,
+                                          height:
+                                              context.screenSize.width / 3.5,
                                           child: const Center(
                                             child: Icon(
                                               Icons
@@ -87,7 +90,8 @@ class ArticleManageScreen extends StatelessWidget {
                                           Text(
                                             articleManageController
                                                 .articleList[index].title!,
-                                            style: theme.textTheme.titleLarge,
+                                            style: context.customTheme.textTheme
+                                                .titleLarge,
                                             overflow: TextOverflow.visible,
                                             maxLines: 2,
                                           ),
@@ -101,7 +105,7 @@ class ArticleManageScreen extends StatelessWidget {
                                               Text(
                                                 articleManageController
                                                     .articleList[index].author!,
-                                                style: theme
+                                                style: context.customTheme
                                                     .textTheme.titleLarge!
                                                     .copyWith(
                                                   color: Colors.grey,
@@ -117,7 +121,7 @@ class ArticleManageScreen extends StatelessWidget {
                                                 flex: 1,
                                                 child: Text(
                                                   "- ${articleManageController.articleList[index].view!} بازدید ",
-                                                  style: theme
+                                                  style: context.customTheme
                                                       .textTheme.titleLarge!
                                                       .copyWith(
                                                     color: Colors.grey,
@@ -130,7 +134,7 @@ class ArticleManageScreen extends StatelessWidget {
                                               ),
                                               Text(
                                                 " ${articleManageController.articleList[index].status!}",
-                                                style: theme
+                                                style: context.customTheme
                                                     .textTheme.titleLarge!
                                                     .copyWith(
                                                         fontSize: 14,
@@ -173,8 +177,6 @@ class ArticleManageScreen extends StatelessWidget {
 //                     child: SpinKitWidgetItems(),
 //                   )
   Center articleEmptyState(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -184,23 +186,23 @@ class ArticleManageScreen extends StatelessWidget {
             children: [
               Image.asset(
                 Assets.images.emptyState.path,
-                height: size.height / 8,
+                height: context.screenSize.height / 8,
               ),
               const SizedBox(
                 height: 12,
               ),
               SizedBox(
-                width: size.width / 1.5,
+                width: context.screenSize.width / 1.5,
                 child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                         text: MyStrings.textArticleEmpty,
-                        style: theme.textTheme.titleLarge)),
+                        style: context.customTheme.textTheme.titleLarge)),
               ),
             ],
           ),
           SizedBox(
-            height: size.height / 25,
+            height: context.screenSize.height / 25,
           ),
         ],
       ),

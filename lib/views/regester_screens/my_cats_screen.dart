@@ -1,7 +1,8 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, avoid_print
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/controller/home_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/models/tags_model.dart';
@@ -15,9 +16,6 @@ class MyCatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-    var bodyMargin = size.width / 10;
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -30,7 +28,7 @@ class MyCatsScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       Assets.images.tcbot.path,
-                      height: size.height / 8,
+                      height: context.screenSize.height / 8,
                     ),
                     const SizedBox(
                       height: 16,
@@ -39,20 +37,21 @@ class MyCatsScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       text: TextSpan(
                           text: MyStrings.textSuccessFulRegister,
-                          style: theme.textTheme.titleLarge),
+                          style: context.customTheme.textTheme.titleLarge),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: bodyMargin),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.bodyMargin10),
                       child: TextField(
                         // controller: activeCodeEditingController,
                         onChanged: (value) {},
-                        style: theme.textTheme.titleLarge,
+                        style: context.customTheme.textTheme.titleLarge,
                         keyboardType: TextInputType.name,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         decoration: InputDecoration(
                           hintText: 'نام و نام خانوادگی',
-                          hintStyle: theme.textTheme.titleSmall,
+                          hintStyle: context.customTheme.textTheme.titleSmall,
                         ),
                       ),
                     ),
@@ -60,7 +59,7 @@ class MyCatsScreen extends StatelessWidget {
                       height: 32,
                     ),
                     Text(MyStrings.textChoosCats,
-                        style: theme.textTheme.titleLarge),
+                        style: context.customTheme.textTheme.titleLarge),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 16, 15, 16),
                       child: SizedBox(
@@ -118,7 +117,8 @@ class MyCatsScreen extends StatelessWidget {
                                             Get.find<HomeController>()
                                                 .tagsList[index]
                                                 .title!,
-                                            style: theme.textTheme.bodySmall,
+                                            style: context.customTheme.textTheme
+                                                .bodySmall,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -168,7 +168,8 @@ class MyCatsScreen extends StatelessWidget {
                                       Flexible(
                                         child: Text(
                                           insertAddListSkill[index].title!,
-                                          style: theme.textTheme.titleLarge,
+                                          style: context
+                                              .customTheme.textTheme.titleLarge,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),

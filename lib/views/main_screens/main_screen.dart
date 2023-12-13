@@ -1,15 +1,16 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
 import 'package:flutter_codeblog/components/storage_key.dart';
-import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/main.dart';
 import 'package:flutter_codeblog/views/main_screens/home_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
@@ -21,16 +22,12 @@ class MainScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _keyScaffoldstate = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-    var bodyMargin = size.width / 10;
-
     return SafeArea(
       child: Scaffold(
         key: _keyScaffoldstate,
         drawer: Drawer(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: bodyMargin),
+            padding: EdgeInsets.symmetric(horizontal: context.bodyMargin10),
             child: ListView(
               children: [
                 DrawerHeader(
@@ -46,7 +43,7 @@ class MainScreen extends StatelessWidget {
                   },
                   title: Text(
                     'پروفایل کاربری',
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                   ),
                 ),
                 const Divider(
@@ -56,7 +53,7 @@ class MainScreen extends StatelessWidget {
                   onTap: () {},
                   title: Text(
                     'درباره تک بللاگ',
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                   ),
                 ),
                 const Divider(
@@ -69,7 +66,7 @@ class MainScreen extends StatelessWidget {
                   },
                   title: Text(
                     'اشتراک گذاری تک بلاگ',
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                   ),
                 ),
                 const Divider(
@@ -81,7 +78,7 @@ class MainScreen extends StatelessWidget {
                   },
                   title: Text(
                     'تک بلاگ در گیت هاب',
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                   ),
                 ),
                 const Divider(
@@ -109,7 +106,7 @@ class MainScreen extends StatelessWidget {
               ),
               Image.asset(
                 Assets.images.splash.path,
-                height: size.height / 14.6,
+                height: context.screenSize.height / 14.6,
               ),
               InkWell(
                 onTap: () {},
@@ -129,11 +126,7 @@ class MainScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   index: selectedIndexPage.value,
                   children: [
-                    HomeScreen(
-                      bodyMargin: bodyMargin,
-                      size: size,
-                      theme: theme,
-                    ),
+                    HomeScreen(),
                     const RegesterIntroScreen(),
                     const ProfileScreen(),
                   ],
@@ -141,8 +134,6 @@ class MainScreen extends StatelessWidget {
               ),
             ),
             BottomNav(
-              size: size,
-              bodyMargin: bodyMargin,
               callBackDataOnTap: (int value) {
                 if (value == 1) {
                   GetStorage().read(StorageKey.tokenKey) == null
@@ -151,7 +142,7 @@ class MainScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              height: size.height / 3,
+                              height: context.customTheme.height / 3,
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -188,7 +179,8 @@ class MainScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           "دونسته هاتو با بقیه به اشتراک بذار ...",
-                                          style: theme.textTheme.titleLarge,
+                                          style: context
+                                              .customTheme.textTheme.titleLarge,
                                         ),
                                       ],
                                     ),
@@ -197,7 +189,8 @@ class MainScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       """فکر کن!!! اینجا هستی یک گیگ تکنولوژِی هستی تجربیاتت رو با جامعه فارسی یه اشتراک بذار""",
-                                      style: theme.textTheme.titleLarge,
+                                      style: context
+                                          .customTheme.textTheme.titleLarge,
                                     ),
                                     const SizedBox(
                                       height: 12,
@@ -224,7 +217,7 @@ class MainScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   "مدیریت مقاله ها",
-                                                  style: theme
+                                                  style: context.customTheme
                                                       .textTheme.titleLarge,
                                                 ),
                                               ],
@@ -244,7 +237,7 @@ class MainScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   "مدیریت پادکست ها",
-                                                  style: theme
+                                                  style: context.customTheme
                                                       .textTheme.titleLarge,
                                                 ),
                                               ],
@@ -274,14 +267,10 @@ class MainScreen extends StatelessWidget {
 class BottomNav extends StatelessWidget {
   const BottomNav({
     super.key,
-    required this.size,
-    required this.bodyMargin,
     required this.callBackDataOnTap,
     required this.selectedIndexPage,
   });
 
-  final Size size;
-  final double bodyMargin;
   final Rx<int> selectedIndexPage;
   final void Function(int) callBackDataOnTap;
   @override
@@ -291,7 +280,7 @@ class BottomNav extends StatelessWidget {
       right: 0,
       bottom: 0,
       child: Container(
-        height: size.height / 12,
+        height: context.screenSize.height / 12,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: MyGradintColors.gradintBottomNavBg,
@@ -300,7 +289,8 @@ class BottomNav extends StatelessWidget {
           ),
         ),
         child: Container(
-          margin: EdgeInsets.fromLTRB(bodyMargin, 5, bodyMargin, 5),
+          margin: EdgeInsets.fromLTRB(
+              context.bodyMargin10, 5, context.bodyMargin10, 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             gradient: LinearGradient(

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/controller/article/article_info_controller.dart';
 import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
@@ -16,96 +17,99 @@ class ArticleInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-    var bodyMargin = size.width / 15;
-
     return SafeArea(
         child: Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Obx(
-            () => infoArticleController.isLoading.value == false
-                ? Column(
-                    children: [
-                      // pic satck
-                      picStackAppBar(size),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            // name and title
-                            Text(
-                              infoArticleController
-                                  .articleInfoList.value.title!,
-                              style: theme.textTheme.titleLarge!
-                                  .copyWith(fontSize: 16),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    Assets.images.profileAvatar.path,
-                                    height: 40,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    infoArticleController
-                                        .articleInfoList.value.author!,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                    infoArticleController
-                                        .articleInfoList.value.createdAt!,
-                                    style: theme.textTheme.bodyMedium!
-                                        .copyWith(color: Colors.grey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            //  text html
-                            SizedBox(
-                              child: HtmlWidget(
+        child: SizedBox(
+          height: context.screenSize.height,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Obx(
+              () => infoArticleController.isLoading.value == false
+                  ? Column(
+                      children: [
+                        // pic satck
+                        picStackAppBar(context),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              // name and title
+                              Text(
                                 infoArticleController
-                                    .articleInfoList.value.content!,
-                                textStyle: theme.textTheme.titleLarge,
-                                onLoadingBuilder:
-                                    (context, element, loadingProgress) =>
-                                        const SpinKitWidgetItems(),
+                                    .articleInfoList.value.title!,
+                                style: context.customTheme.textTheme.titleLarge!
+                                    .copyWith(fontSize: 16),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      Assets.images.profileAvatar.path,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      infoArticleController
+                                          .articleInfoList.value.author!,
+                                      style: context
+                                          .customTheme.textTheme.titleLarge,
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      infoArticleController
+                                          .articleInfoList.value.createdAt!,
+                                      style: context
+                                          .customTheme.textTheme.bodyMedium!
+                                          .copyWith(color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              //  text html
+                              SizedBox(
+                                child: HtmlWidget(
+                                  infoArticleController
+                                      .articleInfoList.value.content!,
+                                  textStyle:
+                                      context.customTheme.textTheme.titleLarge,
+                                  onLoadingBuilder:
+                                      (context, element, loadingProgress) =>
+                                          const SpinKitWidgetItems(),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
 
-                      // tags mortabet
-                      tagsMortabet(bodyMargin, theme),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // related List
-                      relatedList(size, bodyMargin, theme),
-                    ],
-                  )
-                : const Center(
-                    child: SpinKitWidgetItems(),
-                  ),
+                        // tags mortabet
+                        tagsMortabet(context),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        // related List
+                        relatedList(context),
+                      ],
+                    )
+                  : const Center(
+                      child: SpinKitWidgetItems(),
+                    ),
+            ),
           ),
         ),
       ),
     ));
   }
 
-  Stack picStackAppBar(Size size) {
+  Stack picStackAppBar(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -116,16 +120,16 @@ class ArticleInfoScreen extends StatelessWidget {
               begin: Alignment.center,
             ),
           ),
-          height: size.height / 3.5,
-          width: size.width,
+          height: context.screenSize.height / 3.5,
+          width: context.screenSize.width,
           child: Center(
             child: CachedNetworkImage(
               imageUrl: infoArticleController.articleInfoList.value.image!,
               imageBuilder: (context, imageProvider) => Image(
                 image: imageProvider,
                 fit: BoxFit.fill,
-                height: size.height / 3.5,
-                width: size.width,
+                height: context.screenSize.height / 3.5,
+                width: context.screenSize.width,
               ),
               placeholder: (context, url) => const SpinKitWidgetItems(),
               errorWidget: (context, url, error) => const Icon(
@@ -168,7 +172,7 @@ class ArticleInfoScreen extends StatelessWidget {
     );
   }
 
-  SizedBox tagsMortabet(double bodyMargin, ThemeData theme) {
+  SizedBox tagsMortabet(BuildContext context) {
     return SizedBox(
       height: 40,
       child: ListView.builder(
@@ -177,8 +181,8 @@ class ArticleInfoScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 10),
+              padding: EdgeInsets.only(
+                  right: index == 0 ? context.bodyMargin10 : 0, left: 10),
               child: InkWell(
                 onTap: () {
                   Get.find<ArticleListController>().getArticlesWithTagId(
@@ -205,7 +209,7 @@ class ArticleInfoScreen extends StatelessWidget {
                         ),
                         Text(
                           infoArticleController.tagsList[index].title!,
-                          style: theme.textTheme.bodySmall,
+                          style: context.customTheme.textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -217,30 +221,30 @@ class ArticleInfoScreen extends StatelessWidget {
     );
   }
 
-  SizedBox relatedList(Size size, double bodyMargin, ThemeData theme) {
+  SizedBox relatedList(BuildContext context) {
     return SizedBox(
-      height: size.height / 3.5,
+      height: context.screenSize.height / 3.5,
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: infoArticleController.relatedList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 16),
+              padding: EdgeInsets.only(
+                  right: index == 0 ? context.bodyMargin10 : 0, left: 16),
               child: GestureDetector(
                 onTap: () {
                   infoArticleController.getArticleInfo(
                       id: infoArticleController.relatedList[index].id);
                 },
                 child: SizedBox(
-                  width: size.width / 2.4,
+                  width: context.screenSize.width / 2.4,
                   child: Column(
                     children: [
                       Stack(
                         children: [
                           Container(
-                            height: size.height / 4.7,
+                            height: context.screenSize.height / 4.7,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -266,7 +270,7 @@ class ArticleInfoScreen extends StatelessWidget {
                               placeholder: (context, url) =>
                                   const SpinKitWidgetItems(),
                               errorWidget: (context, url, error) => SizedBox(
-                                width: size.width / 2.4,
+                                width: context.screenSize.width / 2.4,
                                 child: const Icon(
                                   Icons.image_not_supported_outlined,
                                   size: 50,
@@ -287,13 +291,15 @@ class ArticleInfoScreen extends StatelessWidget {
                                     infoArticleController
                                             .relatedList[index].author ??
                                         "امیر حیدری",
-                                    style: theme.textTheme.bodyMedium,
+                                    style: context
+                                        .customTheme.textTheme.bodyMedium,
                                   ),
                                 ),
                                 Text(
                                   infoArticleController
                                       .relatedList[index].view!,
-                                  style: theme.textTheme.bodyMedium,
+                                  style:
+                                      context.customTheme.textTheme.bodyMedium,
                                 ),
                                 const Icon(
                                   Icons.remove_red_eye_sharp,
@@ -312,7 +318,7 @@ class ArticleInfoScreen extends StatelessWidget {
                         infoArticleController.relatedList[index].title!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: theme.textTheme.titleLarge,
+                        style: context.customTheme.textTheme.titleLarge,
                       )
                     ],
                   ),

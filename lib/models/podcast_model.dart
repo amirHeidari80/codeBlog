@@ -1,4 +1,4 @@
-import 'package:flutter_codeblog/components/api_constant.dart';
+import 'package:flutter_codeblog/components/constants/api_constant.dart';
 
 class PodcastModel {
   String? id, title, poster, catName, author, view, status, createdAt;

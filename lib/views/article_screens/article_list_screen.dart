@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
 import 'package:flutter_codeblog/controller/article/article_info_controller.dart';
@@ -15,9 +16,6 @@ class ArticleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-
     return SafeArea(
       child: Scaffold(
           appBar: appBarAllPage(context, title!),
@@ -47,8 +45,8 @@ class ArticleListScreen extends StatelessWidget {
                                           .articleList[index].image!,
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
-                                        width: size.width / 3.5,
-                                        height: size.width / 3.5,
+                                        width: context.screenSize.width / 3.5,
+                                        height: context.screenSize.width / 3.5,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(16),
@@ -58,14 +56,15 @@ class ArticleListScreen extends StatelessWidget {
                                         ),
                                       ),
                                       placeholder: (context, url) => SizedBox(
-                                          width: size.width / 3.5,
-                                          height: size.width / 3.5,
+                                          width: context.screenSize.width / 3.5,
+                                          height:
+                                              context.screenSize.width / 3.5,
                                           child: const Center(
                                               child: SpinKitWidgetItems())),
                                       errorWidget: (context, url, error) =>
                                           SizedBox(
-                                        width: size.width / 3.5,
-                                        height: size.width / 3.5,
+                                        width: context.screenSize.width / 3.5,
+                                        height: context.screenSize.width / 3.5,
                                         child: const Center(
                                           child: Icon(
                                             Icons.image_not_supported_outlined,
@@ -87,7 +86,8 @@ class ArticleListScreen extends StatelessWidget {
                                         Text(
                                           listArticleController
                                               .articleList[index].title!,
-                                          style: theme.textTheme.titleLarge,
+                                          style: context
+                                              .customTheme.textTheme.titleLarge,
                                           overflow: TextOverflow.visible,
                                           maxLines: 2,
                                         ),
@@ -101,7 +101,8 @@ class ArticleListScreen extends StatelessWidget {
                                             Text(
                                               listArticleController
                                                   .articleList[index].author!,
-                                              style: theme.textTheme.titleLarge!
+                                              style: context.customTheme
+                                                  .textTheme.titleLarge!
                                                   .copyWith(color: Colors.grey),
                                               overflow: TextOverflow.visible,
                                               maxLines: 2,
@@ -111,7 +112,8 @@ class ArticleListScreen extends StatelessWidget {
                                             ),
                                             Text(
                                               "${listArticleController.articleList[index].view!} بازدید ",
-                                              style: theme.textTheme.titleLarge!
+                                              style: context.customTheme
+                                                  .textTheme.titleLarge!
                                                   .copyWith(color: Colors.grey),
                                               overflow: TextOverflow.visible,
                                               maxLines: 2,

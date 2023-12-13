@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 
@@ -11,8 +12,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -21,13 +20,12 @@ class ProfileScreen extends StatelessWidget {
         children: [
           Image.asset(
             Assets.images.profileAvatar.path,
-            height: size.height / 8,
+            height: context.screenSize.height / 8,
           ),
           const SizedBox(
             height: 12,
           ),
           TitleIconString(
-            theme: theme,
             imageName: Assets.icons.bluePen,
             title: MyStrings.textImageProfile,
             isCentering: true,
@@ -37,47 +35,38 @@ class ProfileScreen extends StatelessWidget {
           ),
           Text(
             'امیر حیدری',
-            style: theme.textTheme.titleLarge,
+            style: context.customTheme.textTheme.titleLarge,
           ),
           Text(
             'example@gmail.com',
-            style: theme.textTheme.titleLarge,
+            style: context.customTheme.textTheme.titleLarge,
           ),
           const SizedBox(
             height: 30,
           ),
           DividerCustom(
-            size: size,
             sizeWidth: 6,
           ),
           InkWellTextBtnDraverAndProfile(
-            size: size,
-            theme: theme,
             onTap: () {},
             title: MyStrings.textFavBlog,
           ),
           DividerCustom(
-            size: size,
             sizeWidth: 6,
           ),
           InkWellTextBtnDraverAndProfile(
-            size: size,
-            theme: theme,
             onTap: () {},
             title: MyStrings.textFavPodcast,
           ),
           DividerCustom(
-            size: size,
             sizeWidth: 6,
           ),
           InkWellTextBtnDraverAndProfile(
-            size: size,
-            theme: theme,
             onTap: () {},
             title: MyStrings.textLogOut,
           ),
           SizedBox(
-            height: size.height / 13,
+            height: context.screenSize.height / 13,
           ),
         ],
       ),

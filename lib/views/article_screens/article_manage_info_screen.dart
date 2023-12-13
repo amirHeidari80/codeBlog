@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
 import 'package:flutter_codeblog/controller/article/article_manage_controller.dart';
@@ -17,15 +18,11 @@ class ArticleManageInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-    var bodyMargin = size.width / 15;
-
     return SafeArea(
         child: Scaffold(
       body: Center(
         child: SizedBox(
-          height: size.height,
+          height: context.screenSize.height,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Obx(
@@ -33,42 +30,42 @@ class ArticleManageInfoScreen extends StatelessWidget {
                   ? Column(
                       children: [
                         // pic satck
-                        picStackAppBar(size, theme),
+                        picStackAppBar(context),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 15, right: 15, top: 20),
+                              left: 15, right: 15, top: 25),
                           child: Column(
                             children: [
                               TitleIconString(
-                                  theme: theme,
                                   imageName: Assets.icons.bluePen,
                                   title: MyStrings.textEditTitleArticle),
                               // name and title
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 5, bottom: 15),
+                                    const EdgeInsets.only(top: 5, bottom: 20),
                                 child: Text(
                                   articleManageController
                                       .articleInfo.value.title!,
-                                  style: theme.textTheme.titleLarge!
-                                      .copyWith(fontSize: 16),
+                                  style: context
+                                      .customTheme.textTheme.titleLarge!
+                                      .copyWith(fontSize: 16.0),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               TitleIconString(
-                                  theme: theme,
                                   imageName: Assets.icons.bluePen,
                                   title: MyStrings.textEditBodyArticle),
                               //  text html
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 5, bottom: 15),
+                                padding: const EdgeInsets.only(top: 5),
                                 child: SizedBox(
+                                  height: context.screenSize.height / 3.5,
                                   child: HtmlWidget(
                                     articleManageController
                                         .articleInfo.value.content!,
-                                    textStyle: theme.textTheme.titleLarge!
+                                    textStyle: context
+                                        .customTheme.textTheme.titleLarge!
                                         .copyWith(color: Colors.grey),
                                     onLoadingBuilder:
                                         (context, element, loadingProgress) =>
@@ -76,6 +73,9 @@ class ArticleManageInfoScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              TitleIconString(
+                                  imageName: Assets.icons.bluePen,
+                                  title: MyStrings.textEditTagsArticle),
                             ],
                           ),
                         ),
@@ -98,7 +98,7 @@ class ArticleManageInfoScreen extends StatelessWidget {
     ));
   }
 
-  Stack picStackAppBar(Size size, ThemeData theme) {
+  Stack picStackAppBar(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -109,16 +109,16 @@ class ArticleManageInfoScreen extends StatelessWidget {
               begin: Alignment.center,
             ),
           ),
-          height: size.height / 3.5,
-          width: size.width,
+          height: context.screenSize.height / 3.5,
+          width: context.screenSize.width,
           child: Center(
             child: CachedNetworkImage(
               imageUrl: articleManageController.articleInfo.value.image!,
               imageBuilder: (context, imageProvider) => Image(
                 image: imageProvider,
                 fit: BoxFit.fill,
-                height: size.height / 3.5,
-                width: size.width,
+                height: context.screenSize.height / 3.5,
+                width: context.screenSize.width,
               ),
               placeholder: (context, url) => const SpinKitWidgetItems(),
               errorWidget: (context, url, error) => const Icon(
@@ -163,8 +163,8 @@ class ArticleManageInfoScreen extends StatelessWidget {
           bottom: 0,
           child: Center(
             child: Container(
-              width: 100,
-              height: 28,
+              width: 120,
+              height: 35,
               decoration: const BoxDecoration(
                 color: MyColors.colorPrimery,
                 borderRadius: BorderRadius.only(
@@ -179,7 +179,8 @@ class ArticleManageInfoScreen extends StatelessWidget {
                   children: [
                     Text(
                       'انتخاب تصویر',
-                      style: theme.textTheme.bodySmall!.copyWith(fontSize: 12),
+                      style: context.customTheme.textTheme.bodySmall!
+                          .copyWith(fontSize: 12.0),
                     ),
                     const Icon(
                       Icons.add,

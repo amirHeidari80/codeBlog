@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_codeblog/bindings.dart';
-import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
 import 'package:flutter_codeblog/my_http_overrides.dart';
 import 'package:flutter_codeblog/views/article_screens/article_info_screen.dart';
 import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_codeblog/components/api_constant.dart';
+import 'package:flutter_codeblog/components/constants/api_constant.dart';
 
 class PosterModel {
   String? id, title, image;

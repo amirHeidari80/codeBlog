@@ -1,4 +1,4 @@
-import 'package:flutter_codeblog/components/api_constant.dart';
+import 'package:flutter_codeblog/components/constants/api_constant.dart';
 
 class ArticleListModel {
   String? id, title, image, catId, catName, author, view, status, createdAt;

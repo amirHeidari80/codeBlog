@@ -1,8 +1,9 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/controller/home_controller.dart';
 import 'package:flutter_codeblog/controller/article/article_info_controller.dart';
 import 'package:flutter_codeblog/controller/article/article_list_controller.dart';
@@ -12,20 +13,14 @@ import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart'
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen(
-      {super.key,
-      required this.theme,
-      required this.size,
-      required this.bodyMargin});
+  HomeScreen({
+    super.key,
+  });
 
 //فراخانی کلاس کنترلر
   var homeScreenController = Get.find<HomeController>();
   var listArticleController = Get.find<ArticleListController>();
   var infoArticleController = Get.find<ArticleInfoController>();
-
-  var theme;
-  final Size size;
-  final double bodyMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                       height: 8,
                     ),
                     // homePagePoster
-                    homePagePoster(),
+                    homePagePoster(context),
                     const SizedBox(
                       height: 16,
                     ),
@@ -47,33 +42,31 @@ class HomeScreen extends StatelessWidget {
                     homePageTagsList(),
                     Padding(
                       padding: EdgeInsets.only(
-                          right: bodyMargin, top: 28, bottom: 8),
+                          right: context.bodyMargin10, top: 28, bottom: 8),
                       child: GestureDetector(
                         onTap: () => Get.to(() => ArticleListScreen(
                               title: 'مقالات جدید',
                             )),
                         child: TitleIconString(
-                          theme: theme,
                           imageName: Assets.icons.bluePen,
                           title: MyStrings.textViweHotBlog,
                         ),
                       ),
                     ),
                     // homePageTopVisitedList
-                    homePageTopVisitedList(),
+                    homePageTopVisitedList(context),
                     Padding(
                       padding: EdgeInsets.only(
-                          right: bodyMargin, top: 16, bottom: 8),
+                          right: context.bodyMargin10, top: 16, bottom: 8),
                       child: TitleIconString(
-                        theme: theme,
                         imageName: Assets.icons.microphon,
                         title: MyStrings.textViweHotPodcast,
                       ),
                     ),
                     // homePagePodcastList
-                    homePagePodcastList(),
+                    homePagePodcastList(context),
                     SizedBox(
-                      height: size.height / 13,
+                      height: context.screenSize.height / 13,
                     ),
                   ],
                 )
@@ -81,10 +74,10 @@ class HomeScreen extends StatelessWidget {
         ));
   }
 
-  Widget homePagePoster() {
+  Widget homePagePoster(BuildContext context) {
     return SizedBox(
-      width: size.width / 1.19,
-      height: size.height / 4.2,
+      width: context.screenSize.width / 1.19,
+      height: context.screenSize.height / 4.2,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -133,7 +126,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Text(
                   homeScreenController.posterItem.value.title!,
-                  style: theme.textTheme.bodyLarge,
+                  style: context.customTheme.textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -152,8 +145,8 @@ class HomeScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 10),
+              padding: EdgeInsets.only(
+                  right: index == 0 ? context.bodyMargin10 : 0, left: 10),
               child: InkWell(
                 onTap: () {
                   listArticleController.getArticlesWithTagId(
@@ -184,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Text(
                           homeScreenController.tagsList[index].title!,
-                          style: theme.textTheme.bodySmall,
+                          style: context.customTheme.textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -196,30 +189,30 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget homePageTopVisitedList() {
+  Widget homePageTopVisitedList(BuildContext context) {
     return SizedBox(
-      height: size.height / 3.5,
+      height: context.screenSize.height / 3.5,
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: homeScreenController.topvisitedList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 16),
+              padding: EdgeInsets.only(
+                  right: index == 0 ? context.bodyMargin10 : 0, left: 16),
               child: GestureDetector(
                 onTap: () {
                   infoArticleController.getArticleInfo(
                       id: homeScreenController.topvisitedList[index].id);
                 },
                 child: SizedBox(
-                  width: size.width / 2.4,
+                  width: context.screenSize.width / 2.4,
                   child: Column(
                     children: [
                       Stack(
                         children: [
                           Container(
-                            height: size.height / 4.7,
+                            height: context.screenSize.height / 4.7,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -245,7 +238,7 @@ class HomeScreen extends StatelessWidget {
                               placeholder: (context, url) =>
                                   const SpinKitWidgetItems(),
                               errorWidget: (context, url, error) => SizedBox(
-                                width: size.width / 2.4,
+                                width: context.screenSize.width / 2.4,
                                 child: const Icon(
                                   Icons.image_not_supported_outlined,
                                   size: 50,
@@ -265,13 +258,15 @@ class HomeScreen extends StatelessWidget {
                                   child: Text(
                                     homeScreenController
                                         .topvisitedList[index].author!,
-                                    style: theme.textTheme.bodyMedium,
+                                    style: context
+                                        .customTheme.textTheme.bodyMedium,
                                   ),
                                 ),
                                 Text(
                                   homeScreenController
                                       .topvisitedList[index].view!,
-                                  style: theme.textTheme.bodyMedium,
+                                  style:
+                                      context.customTheme.textTheme.bodyMedium,
                                 ),
                                 const Icon(
                                   Icons.remove_red_eye_sharp,
@@ -290,7 +285,7 @@ class HomeScreen extends StatelessWidget {
                         homeScreenController.topvisitedList[index].title!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: theme.textTheme.titleLarge,
+                        style: context.customTheme.textTheme.titleLarge,
                       )
                     ],
                   ),
@@ -301,19 +296,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget homePagePodcastList() {
+  Widget homePagePodcastList(BuildContext context) {
     return SizedBox(
-      height: size.height / 4.15,
+      height: context.screenSize.height / 4.15,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           itemCount: homeScreenController.podcastList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(right: index == 0 ? bodyMargin : 0, left: 16),
+              padding: EdgeInsets.only(
+                  right: index == 0 ? context.bodyMargin10 : 0, left: 16),
               child: SizedBox(
-                width: size.width / 2.4,
+                width: context.screenSize.width / 2.4,
                 child: Column(
                   children: [
                     CachedNetworkImage(
@@ -321,7 +316,7 @@ class HomeScreen extends StatelessWidget {
                           (homeScreenController.podcastList[index].poster!),
                       imageBuilder: (context, imageProvider) {
                         return Container(
-                          height: size.height / 5.2,
+                          height: context.screenSize.height / 5.2,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             image: DecorationImage(
@@ -333,11 +328,11 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                       placeholder: (context, url) => SizedBox(
-                        height: size.height / 5.2,
+                        height: context.screenSize.height / 5.2,
                         child: const SpinKitWidgetItems(),
                       ),
                       errorWidget: (context, url, error) => SizedBox(
-                        height: size.height / 5.2,
+                        height: context.screenSize.height / 5.2,
                         child: const Icon(
                           Icons.image_not_supported_outlined,
                           size: 50,
@@ -352,7 +347,7 @@ class HomeScreen extends StatelessWidget {
                       homeScreenController.podcastList[index].title!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: theme.textTheme.titleLarge,
+                      style: context.customTheme.textTheme.titleLarge,
                     )
                   ],
                 ),

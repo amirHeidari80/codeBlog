@@ -14,6 +14,7 @@ class MyStrings {
   static const String textChoosCats = 'دسته بندی هایی که دوست داری انتخاب کن';
   static const String textEditTitleArticle = 'ویرایش عنوان مقاله';
   static const String textEditBodyArticle = 'ویرایش متن اصلی مقاله';
+  static const String textEditTagsArticle = 'انتخاب دسته بندی';
   static const String textWelcom = """به تک بلاگ خوش اومدی
 
 برای ارسال مطلب و پادکست باید حتما

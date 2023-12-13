@@ -1,7 +1,8 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, avoid_print
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
-import 'package:flutter_codeblog/components/strings.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/constants/strings.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/controller/regester_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
@@ -17,9 +18,6 @@ class RegesterIntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -28,7 +26,7 @@ class RegesterIntroScreen extends StatelessWidget {
           children: [
             SvgPicture.asset(
               Assets.images.tcbot.path,
-              height: size.height / 8,
+              height: context.screenSize.height / 8,
             ),
             const SizedBox(
               height: 12,
@@ -37,7 +35,7 @@ class RegesterIntroScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: MyStrings.textWelcom,
-                    style: theme.textTheme.titleLarge)),
+                    style: context.customTheme.textTheme.titleLarge)),
             Column(
               children: [
                 ElevatedButton(
@@ -45,7 +43,7 @@ class RegesterIntroScreen extends StatelessWidget {
                     showEmailBottomSheet(context);
                   },
                   child: SizedBox(
-                    width: size.width / 5,
+                    width: context.screenSize.width / 5,
                     child: const Center(
                       child: Text('ثبت نام'),
                     ),
@@ -54,7 +52,7 @@ class RegesterIntroScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: size.height / 13,
+              height: context.screenSize.height / 13,
             ),
           ],
         ),
@@ -64,8 +62,6 @@ class RegesterIntroScreen extends StatelessWidget {
 }
 
 Future<dynamic> showEmailBottomSheet(BuildContext context) {
-  var size = MediaQuery.of(context).size;
-  var theme = Theme.of(context);
   return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -75,7 +71,7 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
-            height: size.height / 3,
+            height: context.screenSize.height / 3,
             decoration: const BoxDecoration(
               color: MyColors.colorScaffoldBG,
               borderRadius: BorderRadius.only(
@@ -88,7 +84,7 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
               children: [
                 Text(
                   MyStrings.textInsertEmail,
-                  style: theme.textTheme.titleLarge,
+                  style: context.customTheme.textTheme.titleLarge,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 15),
@@ -101,12 +97,12 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
                         print('email is Validate');
                       }
                     },
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                     keyboardType: TextInputType.emailAddress,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       hintText: 'amir@gmail.com',
-                      hintStyle: theme.textTheme.titleSmall,
+                      hintStyle: context.customTheme.textTheme.titleSmall,
                     ),
                   ),
                 ),
@@ -126,7 +122,7 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
                       }
                     },
                     child: SizedBox(
-                      width: size.width / 5,
+                      width: context.screenSize.width / 5,
                       child: Get.find<RegesterController>().isLoading.value ==
                               false
                           ? const Center(
@@ -147,9 +143,6 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
 }
 
 Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
-  var size = MediaQuery.of(context).size;
-  var theme = Theme.of(context);
-
   return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -159,7 +152,7 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
-            height: size.height / 3,
+            height: context.screenSize.height / 3,
             decoration: const BoxDecoration(
               color: MyColors.colorScaffoldBG,
               borderRadius: BorderRadius.only(
@@ -172,7 +165,7 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
               children: [
                 Text(
                   MyStrings.textInsertActivateCode,
-                  style: theme.textTheme.titleLarge,
+                  style: context.customTheme.textTheme.titleLarge,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 15),
@@ -184,14 +177,14 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
                         print('Activate Code is Validate');
                       }
                     },
-                    style: theme.textTheme.titleLarge,
+                    style: context.customTheme.textTheme.titleLarge,
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 6,
                     maxLines: 1,
                     decoration: InputDecoration(
                       hintText: '******',
-                      hintStyle: theme.textTheme.titleSmall,
+                      hintStyle: context.customTheme.textTheme.titleSmall,
                     ),
                   ),
                 ),
@@ -215,7 +208,7 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
                           }
                         },
                         child: SizedBox(
-                          width: size.width / 5,
+                          width: context.screenSize.width / 5,
                           child:
                               Get.find<RegesterController>().isLoading.value ==
                                       false
@@ -248,7 +241,7 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
                         ),
                         child: Text(
                           'ویرایش ایمیل',
-                          style: theme.textTheme.titleLarge,
+                          style: context.customTheme.textTheme.titleLarge,
                         )),
                   ],
                 ),

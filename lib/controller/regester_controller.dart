@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_codeblog/components/api_constant.dart';
+import 'package:flutter_codeblog/components/constants/api_constant.dart';
 import 'package:flutter_codeblog/components/storage_key.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/main.dart';

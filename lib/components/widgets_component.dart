@@ -2,7 +2,8 @@
 
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_codeblog/components/colors.dart';
+import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -11,13 +12,10 @@ import 'package:url_launcher/url_launcher.dart';
 class TitleIconString extends StatelessWidget {
   TitleIconString({
     super.key,
-    required this.theme,
     required this.imageName,
     required this.title,
     this.isCentering = false,
   });
-
-  var theme;
 
   AssetGenImage imageName;
   String title;
@@ -39,7 +37,7 @@ class TitleIconString extends StatelessWidget {
         ),
         Text(
           title,
-          style: theme.textTheme.titleMedium,
+          style: context.customTheme.textTheme.titleMedium,
         ),
       ],
     );
@@ -49,19 +47,17 @@ class TitleIconString extends StatelessWidget {
 class DividerCustom extends StatelessWidget {
   DividerCustom({
     super.key,
-    required this.size,
     required this.sizeWidth,
   });
 
-  final Size size;
   int sizeWidth;
 
   @override
   Widget build(BuildContext context) {
     return Divider(
       color: MyColors.colorDivider,
-      indent: size.width / sizeWidth,
-      endIndent: size.width / sizeWidth,
+      indent: context.screenSize.width / sizeWidth,
+      endIndent: context.screenSize.width / sizeWidth,
     );
   }
 }
@@ -69,14 +65,10 @@ class DividerCustom extends StatelessWidget {
 class InkWellTextBtnDraverAndProfile extends StatelessWidget {
   InkWellTextBtnDraverAndProfile({
     super.key,
-    required this.size,
-    required this.theme,
     required this.onTap,
     required this.title,
   });
 
-  var theme;
-  final Size size;
   final Function()? onTap;
   final String title;
 
@@ -86,12 +78,12 @@ class InkWellTextBtnDraverAndProfile extends StatelessWidget {
       onTap: onTap,
       splashColor: MyColors.colorPrimery.withOpacity(0.5),
       child: SizedBox(
-        height: size.height / 15,
-        width: size.width,
+        height: context.screenSize.height / 15,
+        width: context.screenSize.width,
         child: Center(
           child: Text(
             title,
-            style: theme.textTheme.titleLarge,
+            style: context.customTheme.textTheme.titleLarge,
           ),
         ),
       ),
