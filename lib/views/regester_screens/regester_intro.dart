@@ -116,7 +116,7 @@ Future<dynamic> showEmailBottomSheet(BuildContext context) {
                         Get.find<RegesterController>()
                             .registerEmail(context: context);
                       } else {
-                        showErorrSnackBar(
+                        showCustomSnackBar(
                             message: 'آدرس ایمیل را بدرستی وارد کنید.',
                             title: 'خطا');
                       }
@@ -202,7 +202,7 @@ Future<dynamic> showActivateCodeBottomSheet(BuildContext context) {
                             Get.find<RegesterController>()
                                 .verifayCode(context: context);
                           } else {
-                            showErorrSnackBar(
+                            showCustomSnackBar(
                                 message: 'کد تایید را به صورت کامل وارد کنید.',
                                 title: 'خطا');
                           }

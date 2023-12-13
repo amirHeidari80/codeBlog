@@ -18,7 +18,7 @@ class ArticleManageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBarAllPage(context, 'مدیریت مقاله ها'),
+        appBar: appBarCustom(context, 'مدیریت مقاله ها'),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SizedBox(
@@ -62,7 +62,7 @@ class ArticleManageScreen extends StatelessWidget {
                                             height:
                                                 context.screenSize.width / 3.5,
                                             child: const Center(
-                                                child: SpinKitWidgetItems())),
+                                                child: LoadingItems())),
                                         errorWidget: (context, url, error) =>
                                             SizedBox(
                                           width: context.screenSize.width / 3.5,
@@ -109,7 +109,7 @@ class ArticleManageScreen extends StatelessWidget {
                                                     .textTheme.titleLarge!
                                                     .copyWith(
                                                   color: Colors.grey,
-                                                  fontSize: 13,
+                                                  fontSize: 13.0,
                                                 ),
                                                 overflow: TextOverflow.visible,
                                                 maxLines: 1,
@@ -125,7 +125,7 @@ class ArticleManageScreen extends StatelessWidget {
                                                       .textTheme.titleLarge!
                                                       .copyWith(
                                                     color: Colors.grey,
-                                                    fontSize: 13,
+                                                    fontSize: 13.0,
                                                   ),
                                                   overflow:
                                                       TextOverflow.visible,
@@ -137,7 +137,7 @@ class ArticleManageScreen extends StatelessWidget {
                                                 style: context.customTheme
                                                     .textTheme.titleLarge!
                                                     .copyWith(
-                                                        fontSize: 14,
+                                                        fontSize: 14.0,
                                                         color:
                                                             Colors.blueAccent),
                                                 overflow: TextOverflow.visible,
@@ -154,7 +154,7 @@ class ArticleManageScreen extends StatelessWidget {
                             );
                           })
                       : articleEmptyState(context)
-                  : const SpinKitWidgetItems(),
+                  : const LoadingItems(),
             ),
           ),
         ),

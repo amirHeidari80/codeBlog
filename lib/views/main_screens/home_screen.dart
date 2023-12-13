@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 )
-              : const SpinKitWidgetItems(),
+              : const LoadingItems(),
         ));
   }
 
@@ -109,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              placeholder: (context, url) => const SpinKitWidgetItems(),
+              placeholder: (context, url) => const LoadingItems(),
               errorWidget: (context, url, error) => const Icon(
                 Icons.image_not_supported_outlined,
                 size: 50,
@@ -236,7 +236,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               placeholder: (context, url) =>
-                                  const SpinKitWidgetItems(),
+                                  const LoadingItems(),
                               errorWidget: (context, url, error) => SizedBox(
                                 width: context.screenSize.width / 2.4,
                                 child: const Icon(
@@ -329,7 +329,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       placeholder: (context, url) => SizedBox(
                         height: context.screenSize.height / 5.2,
-                        child: const SpinKitWidgetItems(),
+                        child: const LoadingItems(),
                       ),
                       errorWidget: (context, url, error) => SizedBox(
                         height: context.screenSize.height / 5.2,

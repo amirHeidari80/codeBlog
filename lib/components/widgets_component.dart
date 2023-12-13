@@ -63,12 +63,11 @@ class DividerCustom extends StatelessWidget {
 }
 
 class InkWellTextBtnDraverAndProfile extends StatelessWidget {
-  InkWellTextBtnDraverAndProfile({
+  const InkWellTextBtnDraverAndProfile({
     super.key,
     required this.onTap,
     required this.title,
   });
-
   final Function()? onTap;
   final String title;
 
@@ -91,8 +90,8 @@ class InkWellTextBtnDraverAndProfile extends StatelessWidget {
   }
 }
 
-class SpinKitWidgetItems extends StatelessWidget {
-  const SpinKitWidgetItems({
+class LoadingItems extends StatelessWidget {
+  const LoadingItems({
     super.key,
   });
 
@@ -104,7 +103,7 @@ class SpinKitWidgetItems extends StatelessWidget {
   }
 }
 
-myUrlLuncher(String url) async {
+myUrlLuncherMethod(String url) async {
   var uri = Uri.parse(url);
   if (await canLaunchUrl(uri)) {
     await launchUrl(uri);
@@ -113,8 +112,7 @@ myUrlLuncher(String url) async {
   }
 }
 
-PreferredSize appBarAllPage(BuildContext context, String title) {
-  var theme = Theme.of(context);
+PreferredSize appBarCustom(BuildContext context, String title) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(45),
     child: Container(
@@ -126,22 +124,24 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
           Center(
               child: Text(
             title,
-            style: theme.textTheme.displayLarge,
+            style: context.customTheme.textTheme.displayLarge,
           )),
         ],
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: MyColors.colorPrimery.withOpacity(0.8),
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              size: 20,
-              color: Colors.white,
+        leading: Center(
+          child: GestureDetector(
+            onTap: () => Get.back(),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: MyColors.colorPrimery.withOpacity(0.8),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.arrow_back,
+                  size: 20,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ),
@@ -150,7 +150,7 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
   );
 }
 
-SnackbarController showErorrSnackBar(
+SnackbarController showCustomSnackBar(
     {required String message, required String title}) {
   return Get.snackbar('', '',
       backgroundGradient: LinearGradient(

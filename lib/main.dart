@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_codeblog/bindings.dart';
 import 'package:flutter_codeblog/components/constants/colors.dart';
+import 'package:flutter_codeblog/components/extentions.dart';
 import 'package:flutter_codeblog/my_http_overrides.dart';
 import 'package:flutter_codeblog/views/article_screens/article_info_screen.dart';
 import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart';
@@ -42,13 +43,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale("fa", "IR"),
       themeMode: ThemeMode.light,
-      theme: lightTheme(theme),
+      theme: lightTheme(context),
       initialRoute: NamedRoute.splashScreen,
       initialBinding: HomeBinding(),
       getPages: [
@@ -98,7 +97,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData lightTheme(ThemeData theme) {
+  ThemeData lightTheme(BuildContext context) {
     return ThemeData(
       useMaterial3: false,
       textSelectionTheme: const TextSelectionThemeData(
@@ -127,9 +126,11 @@ class MyApp extends StatelessWidget {
           }),
           textStyle: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
-              return theme.textTheme.bodyLarge!.copyWith(fontSize: 15.5);
+              return context.customTheme.textTheme.bodyLarge!
+                  .copyWith(fontSize: 15.5);
             } else {
-              return theme.textTheme.bodySmall!.copyWith(fontSize: 15);
+              return context.customTheme.textTheme.bodySmall!
+                  .copyWith(fontSize: 15.0);
             }
           }),
         ),

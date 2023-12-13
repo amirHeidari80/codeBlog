@@ -20,9 +20,9 @@ class ArticleManageInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: SizedBox(
-          height: context.screenSize.height,
+      body: SizedBox(
+        height: context.screenSize.height,
+        child: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Obx(
@@ -69,7 +69,7 @@ class ArticleManageInfoScreen extends StatelessWidget {
                                         .copyWith(color: Colors.grey),
                                     onLoadingBuilder:
                                         (context, element, loadingProgress) =>
-                                            const SpinKitWidgetItems(),
+                                            const LoadingItems(),
                                   ),
                                 ),
                               ),
@@ -89,7 +89,7 @@ class ArticleManageInfoScreen extends StatelessWidget {
                       ],
                     )
                   : const Center(
-                      child: SpinKitWidgetItems(),
+                      child: LoadingItems(),
                     ),
             ),
           ),
@@ -120,7 +120,7 @@ class ArticleManageInfoScreen extends StatelessWidget {
                 height: context.screenSize.height / 3.5,
                 width: context.screenSize.width,
               ),
-              placeholder: (context, url) => const SpinKitWidgetItems(),
+              placeholder: (context, url) => const LoadingItems(),
               errorWidget: (context, url, error) => const Icon(
                 Icons.image_not_supported_outlined,
                 size: 50,

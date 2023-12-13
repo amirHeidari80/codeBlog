@@ -64,22 +64,23 @@ class RegesterController extends GetxController {
             box.write(StorageKey.tokenKey, response.data["token"]);
             emailEditingController.text = '';
             activeCodeEditingController.text = '';
-            showErorrSnackBar(message: 'ثبت نام شما انجام شد.', title: 'موفق');
+            showCustomSnackBar(message: 'ثبت نام شما انجام شد.', title: 'موفق');
             break;
           case 'incorrect_code':
-            showErorrSnackBar(
+            showCustomSnackBar(
                 message: 'کد تایید را به صورت صحیح وارد کنید.', title: 'خطا');
             break;
 
           case 'expired':
-            showErorrSnackBar(message: 'کد تایید منقضی شده است.', title: 'خطا');
+            showCustomSnackBar(
+                message: 'کد تایید منقضی شده است.', title: 'خطا');
             break;
         }
       }
     } catch (e) {
       log("#Catch Post register Email => $e");
       isLoading.value = false;
-      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
+      showCustomSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 }

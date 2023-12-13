@@ -18,7 +18,7 @@ class ArticleListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: appBarAllPage(context, title!),
+          appBar: appBarCustom(context, title!),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SizedBox(
@@ -60,7 +60,7 @@ class ArticleListScreen extends StatelessWidget {
                                           height:
                                               context.screenSize.width / 3.5,
                                           child: const Center(
-                                              child: SpinKitWidgetItems())),
+                                              child: LoadingItems())),
                                       errorWidget: (context, url, error) =>
                                           SizedBox(
                                         width: context.screenSize.width / 3.5,
@@ -129,7 +129,7 @@ class ArticleListScreen extends StatelessWidget {
                           );
                         })
                     : const Center(
-                        child: SpinKitWidgetItems(),
+                        child: LoadingItems(),
                       ),
               ),
             ),

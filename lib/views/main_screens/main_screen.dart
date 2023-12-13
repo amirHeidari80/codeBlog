@@ -74,7 +74,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    myUrlLuncher(MyStrings.urlGithub);
+                    myUrlLuncherMethod(MyStrings.urlGithub);
                   },
                   title: Text(
                     'تک بلاگ در گیت هاب',
@@ -142,7 +142,7 @@ class MainScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              height: context.customTheme.height / 3,
+                              height: context.screenSize.height / 3,
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(

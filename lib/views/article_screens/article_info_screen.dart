@@ -19,9 +19,9 @@ class ArticleInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: SizedBox(
-          height: context.screenSize.height,
+      body: SizedBox(
+        height: context.screenSize.height,
+        child: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Obx(
@@ -39,7 +39,7 @@ class ArticleInfoScreen extends StatelessWidget {
                                 infoArticleController
                                     .articleInfoList.value.title!,
                                 style: context.customTheme.textTheme.titleLarge!
-                                    .copyWith(fontSize: 16),
+                                    .copyWith(fontSize: 16.0),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -83,7 +83,7 @@ class ArticleInfoScreen extends StatelessWidget {
                                       context.customTheme.textTheme.titleLarge,
                                   onLoadingBuilder:
                                       (context, element, loadingProgress) =>
-                                          const SpinKitWidgetItems(),
+                                          const LoadingItems(),
                                 ),
                               ),
                             ],
@@ -99,9 +99,7 @@ class ArticleInfoScreen extends StatelessWidget {
                         relatedList(context),
                       ],
                     )
-                  : const Center(
-                      child: SpinKitWidgetItems(),
-                    ),
+                  : const LoadingItems(),
             ),
           ),
         ),
@@ -131,7 +129,7 @@ class ArticleInfoScreen extends StatelessWidget {
                 height: context.screenSize.height / 3.5,
                 width: context.screenSize.width,
               ),
-              placeholder: (context, url) => const SpinKitWidgetItems(),
+              placeholder: (context, url) => const LoadingItems(),
               errorWidget: (context, url, error) => const Icon(
                 Icons.image_not_supported_outlined,
                 size: 50,
@@ -140,27 +138,32 @@ class ArticleInfoScreen extends StatelessWidget {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 15,
           left: 20,
           right: 20,
           child: Row(
             children: [
-              Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 26,
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: const SizedBox(
+                  child: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                    size: 26,
+                  ),
+                ),
               ),
-              Expanded(child: SizedBox()),
-              Icon(
+              const Expanded(child: SizedBox()),
+              const Icon(
                 Icons.bookmark_border,
                 color: Colors.white,
                 size: 26,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
-              Icon(
+              const Icon(
                 Icons.share_rounded,
                 color: Colors.white,
                 size: 26,
@@ -268,7 +271,7 @@ class ArticleInfoScreen extends StatelessWidget {
                                 ),
                               ),
                               placeholder: (context, url) =>
-                                  const SpinKitWidgetItems(),
+                                  const LoadingItems(),
                               errorWidget: (context, url, error) => SizedBox(
                                 width: context.screenSize.width / 2.4,
                                 child: const Icon(

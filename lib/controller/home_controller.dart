@@ -41,7 +41,7 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       log("#Catch Get Home Items => $e");
-      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
+      showCustomSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 }

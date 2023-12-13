@@ -45,7 +45,7 @@ class ArticleManageController extends GetxController {
       }
     } catch (e) {
       log("#Catch get Manage Article => $e");
-      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
+      showCustomSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 }

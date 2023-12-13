@@ -29,7 +29,7 @@ class ArticleListController extends GetxController {
       }
     } catch (e) {
       log("#Catch get Article List => $e");
-      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
+      showCustomSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 
@@ -48,7 +48,7 @@ class ArticleListController extends GetxController {
       }
     } catch (e) {
       log("#Catch get Articles With TagId => $e");
-      showErorrSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
+      showCustomSnackBar(message: 'اتصال اینترنت خود را چک کنید', title: 'خطا');
     }
   }
 }
