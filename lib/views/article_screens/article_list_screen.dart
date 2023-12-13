@@ -11,7 +11,6 @@ class ArticleListScreen extends StatelessWidget {
   String? title;
 
   var listArticleController = Get.find<ArticleListController>();
-
   var infoArticleController = Get.find<ArticleInfoController>();
 
   @override

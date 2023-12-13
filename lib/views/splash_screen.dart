@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codeblog/components/colors.dart';
+
 import 'package:flutter_codeblog/controller/home_controller.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
 import 'package:flutter_codeblog/main.dart';
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 2)).then((value) {
       Get.offAndToNamed(
-        routeMainScreen,
+        NamedRoute.mainScreen,
       );
     });
   }

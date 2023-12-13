@@ -1,12 +1,12 @@
 import 'package:flutter_codeblog/components/api_constant.dart';
 
-class TopVisitedModel {
+class ArticleListModel {
   String? id, title, image, catId, catName, author, view, status, createdAt;
   bool? isFavorite;
 
-  TopVisitedModel();
+  ArticleListModel();
 
-  TopVisitedModel.fromjson(Map<String, dynamic> element) {
+  ArticleListModel.fromjson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
     image = ApiConstant.domainUrl + element["image"];
@@ -14,11 +14,24 @@ class TopVisitedModel {
     catName = element["cat_name"];
     author = element["author"] ?? 'امیر حیدری';
     view = element["view"];
-    status = element["status"];
+    switch (element["status"]) {
+      case '0':
+        status = 'پیش نویس';
+        break;
+      case '1':
+        status = 'منتشر شده';
+        break;
+      case '2':
+        status = 'در انتظار تایید';
+        break;
+    }
     createdAt = element["created_at"];
     isFavorite = element["isFavorite"] ?? false;
   }
 }
+    // 0: 'پیش نویس',
+    // 1: 'منتشر شده',
+    // 2: 'در انتظار تایید'
 
             // "id": "1",
             // "title": "۵ بازی مشابه Assassin’s Creed Valhalla که باید بازی کنید",

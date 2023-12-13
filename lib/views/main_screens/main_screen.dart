@@ -5,6 +5,7 @@ import 'package:flutter_codeblog/components/storage_key.dart';
 import 'package:flutter_codeblog/components/strings.dart';
 import 'package:flutter_codeblog/components/widgets_component.dart';
 import 'package:flutter_codeblog/gen/assets.gen.dart';
+import 'package:flutter_codeblog/main.dart';
 import 'package:flutter_codeblog/views/main_screens/home_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
@@ -35,7 +36,7 @@ class MainScreen extends StatelessWidget {
                 DrawerHeader(
                   child: Image.asset(
                     Assets.images.splash.path,
-                    scale: 3,
+                    scale: 3.0,
                   ),
                 ),
                 ListTile(
@@ -144,7 +145,7 @@ class MainScreen extends StatelessWidget {
               bodyMargin: bodyMargin,
               callBackDataOnTap: (int value) {
                 if (value == 1) {
-                  GetStorage().read(tokenKey) == null
+                  GetStorage().read(StorageKey.tokenKey) == null
                       ? selectedIndexPage.value = value
                       : showModalBottomSheet(
                           context: context,
@@ -207,7 +208,10 @@ class MainScreen extends StatelessWidget {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Get.offNamed(NamedRoute
+                                                  .manageArtcleScreen);
+                                            },
                                             child: Row(
                                               children: [
                                                 Image.asset(

@@ -34,7 +34,7 @@ class RegesterController extends GetxController {
         isLoading.value = false;
         Navigator.pop(context!);
         showActivateCodeBottomSheet(context);
-        box.write(userIdKey, response.data["user_id"]);
+        box.write(StorageKey.userIdKey, response.data["user_id"]);
       }
     } catch (e) {
       log("#Catch Post register Email => $e");
@@ -47,7 +47,7 @@ class RegesterController extends GetxController {
     try {
       Map<String, dynamic> map = {
         "email": emailEditingController.text,
-        "user_id": box.read(userIdKey),
+        "user_id": box.read(StorageKey.userIdKey),
         "code": activeCodeEditingController.text,
         "command": "verify"
       };
@@ -59,9 +59,9 @@ class RegesterController extends GetxController {
 
         switch (response.data['response']) {
           case 'verified':
-            Get.offAllNamed(routeMainScreen);
+            Get.offAllNamed(NamedRoute.mainScreen);
 
-            box.write(tokenKey, response.data["token"]);
+            box.write(StorageKey.tokenKey, response.data["token"]);
             emailEditingController.text = '';
             activeCodeEditingController.text = '';
             showErorrSnackBar(message: 'ثبت نام شما انجام شد.', title: 'موفق');

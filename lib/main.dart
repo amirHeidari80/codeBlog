@@ -6,6 +6,8 @@ import 'package:flutter_codeblog/components/colors.dart';
 import 'package:flutter_codeblog/my_http_overrides.dart';
 import 'package:flutter_codeblog/views/article_screens/article_info_screen.dart';
 import 'package:flutter_codeblog/views/article_screens/article_list_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_manage_info_screen.dart';
+import 'package:flutter_codeblog/views/article_screens/article_manage_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/main_screen.dart';
 import 'package:flutter_codeblog/views/main_screens/profile_screen.dart';
 import 'package:flutter_codeblog/views/regester_screens/regester_intro.dart';
@@ -21,8 +23,12 @@ void main() async {
     const SystemUiOverlayStyle(
       statusBarColor: MyColors.colorStatusBar,
       systemNavigationBarColor: MyColors.colorNavigationBar,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: ThemeMode.system == ThemeMode.light
+          ? Brightness.light
+          : Brightness.dark,
+      systemNavigationBarIconBrightness: ThemeMode.system == ThemeMode.light
+          ? Brightness.light
+          : Brightness.dark,
     ),
   );
 
@@ -43,38 +49,49 @@ class MyApp extends StatelessWidget {
       locale: const Locale("fa", "IR"),
       themeMode: ThemeMode.light,
       theme: lightTheme(theme),
-      initialRoute: routeSplashScreen,
+      initialRoute: NamedRoute.splashScreen,
       initialBinding: HomeBinding(),
       getPages: [
         GetPage(
-            name: routeSplashScreen,
+            name: NamedRoute.splashScreen,
             page: () => const SplashScreen(),
-            bindings: [HomeBinding()],
+            bindings: [
+              HomeBinding(),
+            ],
             transition: Transition.cupertino),
         GetPage(
-            name: routeMainScreen,
+            name: NamedRoute.mainScreen,
             page: () => MainScreen(),
-            bindings: [RegesterBinding(), ArticleBinding()],
+            bindings: [
+              RegesterBinding(),
+              ArticleBinding(),
+              ArticleManageBinding()
+            ],
             transition: Transition.cupertino),
         GetPage(
-            name: routeListArtcleScreen,
+            name: NamedRoute.listArtcleScreen,
             page: () => ArticleListScreen(),
-            bindings: [RegesterBinding()],
             transition: Transition.cupertino),
         GetPage(
-            name: routeInfoArtcleScreen,
+            name: NamedRoute.infoArtcleScreen,
             page: () => ArticleInfoScreen(),
-            bindings: [RegesterBinding()],
             transition: Transition.cupertino),
         GetPage(
-            name: routeRegesterScreen,
+            name: NamedRoute.manageArtcleScreen,
+            page: () => ArticleManageScreen(),
+            bindings: [ArticleManageBinding()],
+            transition: Transition.cupertino),
+        GetPage(
+            name: NamedRoute.articleManageInfoScreen,
+            page: () => ArticleManageInfoScreen(),
+            transition: Transition.cupertino),
+        GetPage(
+            name: NamedRoute.regesterScreen,
             page: () => const RegesterIntroScreen(),
-            bindings: [RegesterBinding()],
             transition: Transition.cupertino),
         GetPage(
-            name: routeProfileScreen,
+            name: NamedRoute.profileScreen,
             page: () => const ProfileScreen(),
-            // bindings: [RegesterBinding()],
             transition: Transition.cupertino),
       ],
       home: const SplashScreen(),
@@ -83,6 +100,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData lightTheme(ThemeData theme) {
     return ThemeData(
+      useMaterial3: false,
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: MyColors.colorPrimery,
       ),
@@ -97,6 +115,9 @@ class MyApp extends StatelessWidget {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
+          fixedSize: MaterialStateProperty.all(const Size(double.infinity, 40)),
+          shape: MaterialStateProperty.resolveWith((states) =>
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
               return MyGradintColors.gradintBottomNav[0];
@@ -106,9 +127,9 @@ class MyApp extends StatelessWidget {
           }),
           textStyle: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
-              return theme.textTheme.bodyLarge!.copyWith(fontSize: 18);
+              return theme.textTheme.bodyLarge!.copyWith(fontSize: 15.5);
             } else {
-              return theme.textTheme.bodySmall!.copyWith(fontSize: 16);
+              return theme.textTheme.bodySmall!.copyWith(fontSize: 15);
             }
           }),
         ),
@@ -155,9 +176,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const String routeSplashScreen = '/';
-const String routeMainScreen = '/mainScreen';
-const String routeListArtcleScreen = '/listArtcleScreen';
-const String routeInfoArtcleScreen = '/infoArtcleScreen';
-const String routeRegesterScreen = '/regesterScreen';
-const String routeProfileScreen = '/profileScreen';
+class NamedRoute {
+  static String splashScreen = '/';
+  static String mainScreen = '/mainScreen';
+  static String listArtcleScreen = '/listArtcleScreen';
+  static String infoArtcleScreen = '/infoArtcleScreen';
+  static String manageArtcleScreen = '/manageArtcleScreen';
+  static String articleManageInfoScreen = '/articleManageInfoScreen';
+  static String regesterScreen = '/regesterScreen';
+  static String profileScreen = '/profileScreen';
+}

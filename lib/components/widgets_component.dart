@@ -137,15 +137,20 @@ PreferredSize appBarAllPage(BuildContext context, String title) {
             style: theme.textTheme.displayLarge,
           )),
         ],
-        leading: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: MyColors.colorPrimery.withOpacity(0.8),
-          ),
-          child: const Icon(
-            Icons.arrow_back,
-            size: 20,
-            color: Colors.white,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: MyColors.colorPrimery.withOpacity(0.8),
+            ),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 20,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
